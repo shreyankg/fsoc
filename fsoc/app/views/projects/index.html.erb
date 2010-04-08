@@ -1,0 +1,27 @@
+<div class="post">
+	<h2 class="title">Listing projects</h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+		<table>
+  <tr>
+    <th>Name</th>
+    <th>Definition</th>
+    <th>Estimated Time (in days)</th>
+  </tr>
+
+<% @projects.each do |project| %>
+  <tr>
+    <td><%=h project.name %></td>
+    <td><%=h project.definition %></td>
+    <td><%=h project.eta %></td>
+    <td><%= link_to 'Show', project %></td>
+    <td><%= link_to 'Edit', edit_project_path(project) %></td>
+    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+		<p class="links"><%= link_to 'New project', new_project_path %></p>
+		
+	</div>
+</div>

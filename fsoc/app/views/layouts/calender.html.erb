@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<!--
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+
+Name       : Indication  
+Description: A two-column, fixed-width design with dark color scheme.
+Version    : 1.0
+Released   : 20090910
+
+-->
+
+
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Calender: <%= controller.action_name %></title>
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'style' %>
+</head><body>
+<div id="wrapper">
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#">fsoc</a></h1>
+			<p>Four Seasons of Code</p>
+		</div>
+	</div>
+	<!-- end #header -->
+	<div id="menu">
+		<ul>
+			<li><a href="/">Dashboard</a></li>
+			<li><a href="/projects">Projects</a></li>
+			<li class="current_page_item"><a href="/calender">Calender</a></li>
+			<li><a href="/about">About FSoC</a></li>
+			
+			
+		</ul>
+	</div>
+	<!-- end #menu -->
+	<div id="page">
+	<div id="page-bgtop">
+	<div id="page-bgbtm">
+		<div id="content">
+		<p style="color: green"><%= flash[:notice] %></p>
+    <%= yield %>
+		<div style="clear: both;">&nbsp;</div>
+		</div>
+		<!-- end #content -->
+		<div id="sidebar">
+			<ul>
+				<li>
+					<!--div id="search">
+					<form action="#" method="get">
+						<div>
+							<input type="text" value="" id="search-text" name="s"/>
+							<input type="submit" value="GO" id="search-submit"/>
+						</div>
+					</form>
+					</div-->
+					<div style="clear: both;">&nbsp;</div>
+				</li>
+				<li>
+					<h2>Welcome</h2>
+					<p>Guest</p>
+				</li>
+				<li>
+					<h2>Recent Projects</h2>
+					<!--ul>
+						<li><a href="#">Aliquam libero</a></li>
+					</ul-->
+				</li>
+				
+				
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	</div>
+	</div>
+	<!-- end #page -->
+</div>
+	<div id="footer">
+		<p>Copyright (c) 2010 Shreyank Gupta. All rights reserved. Design by <a href="http://www.freecsstemplates.org/">Free CSS Templates</a>.</p>
+	</div>
+	<!-- end #footer -->
+</body></html>

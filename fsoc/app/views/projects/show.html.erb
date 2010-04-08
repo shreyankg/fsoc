@@ -1,0 +1,28 @@
+<div class="post">
+	<h2 class="title">View project</h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+<p>
+  <b>Name:</b>
+  <%=h @project.name %>
+</p>
+
+<p>
+  <b>Definition:</b>
+  <%=h @project.definition %>
+</p>
+
+<p>
+  <b>Estimated Time (in days):</b>
+  <%=h @project.eta %>
+</p>
+
+
+		<p class="links">
+		  <%= link_to 'Edit', edit_project_path(@project) %> |
+      <%= link_to 'Back', projects_path %>
+    </p>
+		
+	</div>
+</div>

@@ -1,0 +1,27 @@
+<div class="post">
+	<h2 class="title">New project</h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+	<% form_for(@project) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :definition %><br />
+    <%= f.text_area :definition %>
+  </p>
+  <p>
+    Estimated Time (in days)<br />
+    <%= f.text_field :eta %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+		<p class="links"><%= link_to 'Back', projects_path %></p>	
+	</div>
+</div>
