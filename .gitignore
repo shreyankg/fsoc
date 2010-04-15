@@ -1,0 +1,3 @@
+*~
+*.sqlite3
+fsoc/log/*.log
