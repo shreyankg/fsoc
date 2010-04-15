@@ -3,6 +3,11 @@ class UsersController < ApplicationController
 
   # render new.rhtml
   def new
+    if User.all.length == 0
+      @options = [['Admin', 'admin']]
+    else
+      @options = [['Student', 'student'], ['Mentor', 'mentor']]
+    end
     @user = User.new
   end
  
