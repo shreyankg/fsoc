@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => ['index', 'show']
   # GET /projects
   # GET /projects.xml
   def index

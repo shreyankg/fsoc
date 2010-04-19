@@ -21,9 +21,9 @@
 <p>
  <b>Mentor:</b>
     <% if @project.mentor %>
-      <%=h @project.mentor_user.login %> (<%= link_to 'Resign as Mentor', :action => 'resign', :id => @project.id %>)
+      <%=h @project.mentor_user.login %> <%= link_to '(Resign as Mentor)', :action => 'resign', :id => @project.id if mentor? %>
     <% else %>
-      Nobody (<%= link_to 'Volunteer as Mentor', :action => 'volunteer', :id => @project.id %>)
+      Nobody <%= link_to '(Volunteer as Mentor)', :action => 'volunteer', :id => @project.id if mentor? %>
 <% end %>
 </p>
 <p>
@@ -34,8 +34,10 @@
 </p>
 
 		<p class="links">
+		<% if logged_in? %>
 		  <%= link_to 'Edit', edit_project_path(@project) %> |
-      <%= link_to 'Back', projects_path %>
+		<% end %>
+      <%= link_to 'Back to projects', projects_path %>
     </p>
 		
 	</div>

@@ -17,12 +17,15 @@
     <td><%=h project.proposer.login %></td>
     <td><%=h project.mentor_user ? project.mentor_user.login: "Nobody" %></td>
     <td><%=h project.eta %></td>
+    <% if logged_in? %>
     <td><%= link_to 'Edit', edit_project_path(project) %> | 
     <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
+  <% if logged_in? %>
 		<p class="links"><%= link_to 'New project', new_project_path %></p>
-		
+  <% end %>		
 	</div>
 </div>

@@ -9,4 +9,11 @@ module ApplicationHelper
     return Project.all.reverse
   end
   
+  def mentor?
+    logged_in? and current_user.user_type == "mentor"
+  end
+    
+  def student?
+    logged_in? and current_user.user_type == "student"
+  end
 end
