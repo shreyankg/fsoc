@@ -3,21 +3,20 @@
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
-		<table>
+		<table id="hor-minimalist-a">
   <tr>
     <th>Name</th>
-    <th>Definition</th>
-    <th>Estimated Time (in days)</th>
+    <th>Proposed By</th>
+    <th>Estimated Time <br />(in days)</th>
   </tr>
 
 <% @projects.each do |project| %>
   <tr>
-    <td><%=h project.name %></td>
-    <td><%=h project.definition %></td>
+    <td><%= link_to project.name, project %>
+    <td><%=h project.proposer.login %></td>
     <td><%=h project.eta %></td>
-    <td><%= link_to 'Show', project %></td>
-    <td><%= link_to 'Edit', edit_project_path(project) %></td>
-    <td><%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Edit', edit_project_path(project) %> | 
+    <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>

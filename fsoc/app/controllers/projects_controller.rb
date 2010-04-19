@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
   # POST /projects.xml
   def create
     @project = Project.new(params[:project])
-
+    @project.proposed_by = current_user.id
     respond_to do |format|
       if @project.save
         flash[:notice] = 'Project was successfully created.'

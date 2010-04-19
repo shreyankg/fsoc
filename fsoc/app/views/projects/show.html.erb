@@ -1,23 +1,31 @@
 <div class="post">
-	<h2 class="title">View project</h2>
+	<h2 class="title"><%=h @project.name %></h2>
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
-<p>
-  <b>Name:</b>
-  <%=h @project.name %>
-</p>
 
 <p>
-  <b>Definition:</b>
+  <b>Project Definition:</b>
+  <br />
   <%=h @project.definition %>
 </p>
 
 <p>
-  <b>Estimated Time (in days):</b>
-  <%=h @project.eta %>
+  <b>URLs:</b>
+  <br />
+  <% @project.urls.split(',').each do |link| %>
+    <%= link_to link, link, :popup => true -%><br />
+  <% end %>
+  
 </p>
 
+<p>
+  <b>Proposed by:</b> <%=h @project.proposer.login %>
+</p>
+
+<p>
+  <b>Estimated Time (in days):</b> <%=h @project.eta %>
+</p>
 
 		<p class="links">
 		  <%= link_to 'Edit', edit_project_path(@project) %> |
