@@ -5,4 +5,8 @@ module ApplicationHelper
     return 'class="current_page_item"'
   end
   
+  def all_projects
+    return Project.all.reverse
+  end
+  
 end

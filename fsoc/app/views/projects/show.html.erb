@@ -18,11 +18,17 @@
   <% end %>
   
 </p>
-
+<p>
+ <b>Mentor:</b>
+    <% if @project.mentor %>
+      <%=h @project.mentor_user.login %> (<%= link_to 'Resign as Mentor', :action => 'resign', :id => @project.id %>)
+    <% else %>
+      Nobody (<%= link_to 'Volunteer as Mentor', :action => 'volunteer', :id => @project.id %>)
+<% end %>
+</p>
 <p>
   <b>Proposed by:</b> <%=h @project.proposer.login %>
 </p>
-
 <p>
   <b>Estimated Time (in days):</b> <%=h @project.eta %>
 </p>

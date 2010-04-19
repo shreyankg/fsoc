@@ -61,9 +61,11 @@ Released   : 20090910
 				</li>
 				<li>
 					<h2>Recent Projects</h2>
-					<!--ul>
-						<li><a href="#">Aliquam libero</a></li>
-					</ul-->
+					<ul>
+					<% all_projects.each do |project| %>					
+						<li><%= link_to project.name, project %></li>
+					<% end %>
+					</ul>
 				</li>
 				
 				

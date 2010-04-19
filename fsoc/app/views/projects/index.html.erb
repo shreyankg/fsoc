@@ -6,7 +6,8 @@
 		<table id="hor-minimalist-a">
   <tr>
     <th>Name</th>
-    <th>Proposed By</th>
+    <th>Proposed by</th>
+    <th>Mentor</th>
     <th>Estimated Time <br />(in days)</th>
   </tr>
 
@@ -14,6 +15,7 @@
   <tr>
     <td><%= link_to project.name, project %>
     <td><%=h project.proposer.login %></td>
+    <td><%=h project.mentor_user ? project.mentor_user.login: "Nobody" %></td>
     <td><%=h project.eta %></td>
     <td><%= link_to 'Edit', edit_project_path(project) %> | 
     <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>

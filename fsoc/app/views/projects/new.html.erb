@@ -15,12 +15,17 @@
     <%= f.text_area :definition %>
   </p>
   <p>
-    <%= f.label :urls %><br />
+    URL's (separated by commas)<br />
     <%= f.text_field :urls %>
   </p>
   <p>
     Estimated Time (in days)<br />
     <%= f.text_field :eta %>
+  </p>
+  <p>
+    <% if current_user.user_type == 'mentor' %>
+    <%= check_box_tag 'mentor' %> I want to mentor this project.
+    <% end %>
   </p>
   <p>
     <%= f.submit 'Create' %>

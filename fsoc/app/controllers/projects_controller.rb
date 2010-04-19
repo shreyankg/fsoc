@@ -42,7 +42,12 @@ class ProjectsController < ApplicationController
   # POST /projects.xml
   def create
     @project = Project.new(params[:project])
+    
     @project.proposed_by = current_user.id
+    is_mentor = params[:mentor]
+    if is_mentor
+      @project.mentor = current_user.id
+    end
     respond_to do |format|
       if @project.save
         flash[:notice] = 'Project was successfully created.'
@@ -82,5 +87,27 @@ class ProjectsController < ApplicationController
       format.html { redirect_to(projects_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def volunteer
+    @project = Project.find(params[:id])
+    @project.mentor = current_user.id
+    if @project.save
+      flash[:notice] = 'You are now mentoring this project.'
+    else
+      flash[:notice] = 'Unable to process the request'
+    end
+    redirect_to(@project)
+  end
+  
+    def resign
+    @project = Project.find(params[:id])
+    @project.mentor = nil
+    if @project.save
+      flash[:notice] = 'You are no longer mentoring this project.'
+    else
+      flash[:notice] = 'Unable to process the request'
+    end
+    redirect_to(@project)
   end
 end
