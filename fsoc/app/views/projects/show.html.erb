@@ -13,10 +13,7 @@
 <p>
   <b>URLs:</b>
   <br />
-  <% @project.urls.split(',').each do |link| %>
-    <%= link_to link, link, :popup => true -%><br />
-  <% end %>
-  
+    <%= devide_link @project.urls %>
 </p>
 <p>
  <b>Mentor:</b>

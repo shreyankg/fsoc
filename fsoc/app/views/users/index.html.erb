@@ -1,0 +1,24 @@
+<div class="post">
+	<h2 class="title">Listing Users</h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+		<table id="hor-minimalist-a">
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th>User Type</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= link_to_user user %>
+    <td><%=h sanitize(user.email) %></td>
+    <td><%=h user.user_type %></td>
+ 
+  </tr>
+<% end %>
+</table>
+
+	</div>
+</div>

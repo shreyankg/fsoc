@@ -89,5 +89,11 @@ module UsersHelper
       link_to_login_with_IP content_text, options
     end
   end
+  
+  def sanitize(email)
+    email['@'] = ' AT '
+    email['.'] = ' DOT '
+    return email
+  end
 
 end

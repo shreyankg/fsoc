@@ -1,8 +1,11 @@
+<ul>
 <% if logged_in? -%>
 <h2>Welcome <%= link_to_current_user :content_method => :login %></h2>
-  <p><%= link_to "Log out", logout_path, { :title => "Log out" }    %></p>
+  <li><%= link_to "Log out", logout_path, { :title => "Log out" }    %></li>
+  <li><%= link_to "Edit User profile", edit_user_path(current_user) %></li>
 <% else -%>
 <h2>Welcome Guest</h2>
-  <p><%= link_to "Log in",  login_path,  { :title => "Log in" } %> | 
-                               <%= link_to "Sign up", signup_path, { :title => "Create an account" } %></p>
+  <li><%= link_to "Log in",  login_path,  { :title => "Log in" } %> | 
+                               <%= link_to "Sign up", signup_path, { :title => "Create an account" } %></li>
 <% end -%>
+</ul>

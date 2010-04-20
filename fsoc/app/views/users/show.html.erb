@@ -1,0 +1,48 @@
+<div class="post">
+	<h2 class="title"><%=h @user.login %></h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+
+<p>
+  <b>Name:</b>
+  <%=h dash @user.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%=h sanitize @user.email %>
+</p>
+
+<p>
+  <b>Webpage/Blog:</b>
+  <br />
+    <%= devide_link @user.webpage %>
+</p>
+
+<p>
+  <b>Contact on IRC:</b>
+  <br />
+  <%=h dash [@user.irc_nick, 'on', @user.irc_channels] %>
+</p>
+        
+<p>
+  <b>Institute/Organisation:</b>
+  <%=h dash @user.org %>
+</p>
+        
+<p>
+  <b>About me:</b>
+  <br />
+  <%=h dash @user.bio %> 
+</p>
+
+<p class="links">
+<% if logged_in? %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+<% end %>
+  <%= link_to 'Back to users', users_path %>
+</p>
+
+	</div>
+</div>
