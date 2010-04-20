@@ -1,3 +1,8 @@
 2010-04-20  Shreyank Gupta  <sgupta@REDHAT.COM>
 
+	* COPYING, 
+	README: New Files.
+
+2010-04-20  Shreyank Gupta  <sgupta@REDHAT.COM>
+
 	* .: First Commit
