@@ -43,10 +43,10 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(params[:project])
     
-    @project.proposed_by = current_user.id
+    @project.proposer = current_user
     is_mentor = params[:mentor]
     if is_mentor
-      @project.mentor = current_user.id
+      @project.mentor = current_user
     end
     respond_to do |format|
       if @project.save
@@ -91,7 +91,7 @@ class ProjectsController < ApplicationController
   
   def volunteer
     @project = Project.find(params[:id])
-    @project.mentor = current_user.id
+    @project.mentor = current_user
     if @project.save
       flash[:notice] = 'You are now mentoring this project.'
     else

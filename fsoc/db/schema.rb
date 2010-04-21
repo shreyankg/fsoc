@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100420104839) do
+ActiveRecord::Schema.define(:version => 20100421111237) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
@@ -18,9 +18,9 @@ ActiveRecord::Schema.define(:version => 20100420104839) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "status",      :default => "proposed"
-    t.integer  "proposed_by"
-    t.integer  "mentor"
-    t.integer  "student"
+    t.integer  "proposer_id"
+    t.integer  "mentor_id"
+    t.integer  "student_id"
     t.string   "urls"
   end
 
