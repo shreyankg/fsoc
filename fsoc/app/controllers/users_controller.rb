@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-
+  before_filter :login_required, :except => ['new', 'create']
   # GET /users
   # GET /users.xml
   def index
@@ -36,6 +36,10 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    if @user != current_user
+      flash[:notice] = "You are not authorised to edit a different user."
+      redirect_to :controller => 'users'
+    end
   end  
  
   def create

@@ -38,7 +38,7 @@
 </p>
 
 <p class="links">
-<% if logged_in? %>
+<% if logged_in? and @user == current_user %>
   <%= link_to 'Edit', edit_user_path(@user) %> |
 <% end %>
   <%= link_to 'Back to users', users_path %>
