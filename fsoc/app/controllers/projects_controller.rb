@@ -36,6 +36,10 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    if !can_edit_project?(@project)
+      flash[:notice] = 'You are not authorised to edit this project.'
+      redirect_to projects_url
+    end
   end
 
   # POST /projects
@@ -81,6 +85,10 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.xml
   def destroy
     @project = Project.find(params[:id])
+    if !can_delete_project?(@project)
+      flash[:notice] = 'You are not authorised to delete this project.'
+      redirect_to projects_url
+    end
     @project.destroy
 
     respond_to do |format|
@@ -91,23 +99,31 @@ class ProjectsController < ApplicationController
   
   def volunteer
     @project = Project.find(params[:id])
-    @project.mentor = current_user
-    if @project.save
-      flash[:notice] = 'You are now mentoring this project.'
+    if mentor? && !@project.mentor
+      @project.mentor = current_user
+      if @project.save
+        flash[:notice] = 'You are now mentoring this project.'
+      else
+        flash[:notice] = 'Unable to process the request'
+      end   
     else
-      flash[:notice] = 'Unable to process the request'
+      flash[:notice] = 'You cannot volunteer to mentor this project'
     end
     redirect_to(@project)
   end
   
-    def resign
+  def resign
     @project = Project.find(params[:id])
-    @project.mentor = nil
-    if @project.save
-      flash[:notice] = 'You are no longer mentoring this project.'
+    if mentor? && @project.mentor == current_user
+      @project.mentor = nil
+      if @project.save
+        flash[:notice] = 'You are no longer mentoring this project.'
+      else
+        flash[:notice] = 'Unable to process the request'
+      end
     else
-      flash[:notice] = 'Unable to process the request'
-    end
-    redirect_to(@project)
+      flash[:notice] = 'You cannot resign as mentor from this project'
+    end    
+    redirect_to(@project)    
   end
 end
