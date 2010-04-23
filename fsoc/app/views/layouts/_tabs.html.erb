@@ -1,18 +1,24 @@
+<% if logged_in? %>
 <li
   <%= highlighted if highlight == "dashboard" -%>
 ><a href="/">Dashboard</a></li>
+<% end %>
 
 <li
   <%= highlighted if highlight == "projects" -%>
 ><a href="/projects">Projects</a></li>
 
+<% if logged_in? %>
 <li
   <%= highlighted if highlight == "users" -%>
 ><a href="/users">Users</a></li>
+<% end %>
 
+<% if logged_in? %>
 <li
   <%= highlighted if highlight == "calender" -%>
 ><a href="/calender">Calender</a></li>
+<% end %>
 
 <li
   <%= highlighted if highlight == "about" -%>

@@ -62,8 +62,12 @@ Released   : 20090910
 				<li>
 					<h2>Recent Projects</h2>
 					<ul>
-					<% all_projects.each do |project| %>					
-						<li><%= link_to project.name, project %></li>
+					<% if !all_projects.empty? %>
+					  <% all_projects.each do |project| %>					
+						  <li><%= link_to project.name, project %></li>
+					  <% end %>
+					<% else %>
+					<li>No Projects listed. <%= link_to 'Create', new_project_path %></li>
 					<% end %>
 					</ul>
 				</li>

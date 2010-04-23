@@ -95,5 +95,9 @@ module UsersHelper
     email['.'] = ' DOT '
     return email
   end
+  
+  def user_empty?
+    User.first.nil? ? true: false
+  end
 
 end

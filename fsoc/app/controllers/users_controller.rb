@@ -25,11 +25,7 @@ class UsersController < ApplicationController
   
   # render new.rhtml
   def new
-    if User.all.length == 0
-      @options = [['Admin', 'admin']]
-    else
-      @options = [['Student', 'student'], ['Mentor', 'mentor']]
-    end
+    @options = [['Student', 'student'], ['Mentor', 'mentor']]
     @user = User.new
   end
   
@@ -45,6 +41,7 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
+    @user.user_type = 'admin' if User.first.nil?
     success = @user && @user.save
     if success && @user.errors.empty?
             # Protects against session fixation attacks, causes request forgery

@@ -3,29 +3,35 @@
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
+<% if @project %>
 		<table id="hor-minimalist-a">
-  <tr>
-    <th>Name</th>
-    <th>Proposed by</th>
-    <th>Mentor</th>
-    <th>Estimated Time <br />(in days)</th>
-  </tr>
+      <tr>
+        <th>Name</th>
+        <th>Proposed by</th>
+        <th>Mentor</th>
+        <th>Estimated Time <br />(in days)</th>
+      </tr>
 
-<% @projects.each do |project| %>
-  <tr>
-    <td><%= link_to project.name, project %>
-    <td><%=h project.proposer.login %></td>
-    <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>
-    <td><%=h project.eta %></td>
-    <% if logged_in? %>
-    <td><%= link_to 'Edit', edit_project_path(project) %> | 
-    <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= link_to project.name, project %>
+        <td><%=h project.proposer.login %></td>
+        <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>
+        <td><%=h project.eta %></td>
+        <% if logged_in? %>
+        <td><%= link_to 'Edit', edit_project_path(project) %> | 
+        <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
     <% end %>
-  </tr>
+  </table>
+<% else %>
+  <h3>No projects listed.</h3>
 <% end %>
-</table>
   <% if logged_in? %>
 		<p class="links"><%= link_to 'New project', new_project_path %></p>
+	<% else %>
+	  <p class="links"><%= link_to 'Login', login_path %> or <%= link_to 'Signup', signup_path %> to get started.</p>
   <% end %>		
 	</div>
 </div>

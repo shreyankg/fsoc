@@ -12,9 +12,13 @@
 
     <p><%= label_tag 'email' %><br/>
     <%= f.text_field :email %></p>
-
-    <p><%= label_tag 'user_type' %><br/>
-    <%= f.select(:user_type, options_for_select(@options)) %> 
+    
+    <p><%= label_tag 'user_type' %>
+<% if !user_empty? %>
+    <br/><%= f.select(:user_type, options_for_select(@options)) %>
+<% else %>
+    : <b>Admin</b>
+<% end %>
 
     <p><%= label_tag 'password' %><br/>
     <%= f.password_field :password %></p>
