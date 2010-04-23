@@ -3,7 +3,7 @@
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
-<% if @project %>
+<% if @projects %>
 		<table id="hor-minimalist-a">
       <tr>
         <th>Name</th>
@@ -18,8 +18,12 @@
         <td><%=h project.proposer.login %></td>
         <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>
         <td><%=h project.eta %></td>
-        <% if logged_in? %>
-        <td><%= link_to 'Edit', edit_project_path(project) %> | 
+        <td>
+        <% if can_edit_project?(project) %>
+          <%= link_to 'Edit', edit_project_path(project) %>
+        <% end %>
+        <%= ' | ' if can_edit_project?(project) && can_delete_project?(project) %>
+        <% if can_delete_project?(project) %>
         <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
         <% end %>
       </tr>

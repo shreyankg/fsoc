@@ -97,7 +97,7 @@ module UsersHelper
   end
   
   def user_empty?
-    User.first.nil? ? true: false
+    User.first.nil?
   end
 
 end
