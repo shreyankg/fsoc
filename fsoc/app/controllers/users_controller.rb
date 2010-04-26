@@ -25,7 +25,6 @@ class UsersController < ApplicationController
   
   # render new.rhtml
   def new
-    @options = [['Student', 'student'], ['Mentor', 'mentor']]
     @user = User.new
   end
   

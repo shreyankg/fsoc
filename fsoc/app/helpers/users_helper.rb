@@ -96,8 +96,8 @@ module UsersHelper
     return email
   end
   
-  def user_empty?
-    User.first.nil?
+  def user_type_options
+    [['Student', 'student'], ['Mentor', 'mentor']] if !User.first.nil?
   end
 
 end

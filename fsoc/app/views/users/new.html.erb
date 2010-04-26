@@ -14,8 +14,8 @@
     <%= f.text_field :email %></p>
     
     <p><%= label_tag 'user_type' %>
-<% if !user_empty? %>
-    <br/><%= f.select(:user_type, options_for_select(@options)) %>
+<% if user_type_options %>
+    <br/><%= f.select(:user_type, options_for_select(user_type_options)) %>
 <% else %>
     : <b>Admin</b>
 <% end %>
