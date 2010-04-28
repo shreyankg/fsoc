@@ -4,16 +4,16 @@ module AccessControl
   protected
 
     #user specific
-    def mentor?
-      logged_in? && current_user.user_type == "mentor"
+    def mentor?(user = current_user)
+      logged_in? && user.user_type == "mentor"
     end
       
-    def student?
-      logged_in? && current_user.user_type == "student"
+    def student?(user = current_user)
+      logged_in? && user.user_type == "student"
     end
     
-    def admin?
-      logged_in? && current_user.user_type == "admin"
+    def admin?(user = current_user)
+      logged_in? && user.user_type == "admin"
     end 
     
     #project specific
@@ -27,7 +27,10 @@ module AccessControl
     
     #proposal specific
     def can_add_proposal?(project)
-      proposals = project.proposals.find(:all, :conditions => {:student_id => current_user.id})
+      proposals = Array.new
+      if logged_in?
+        proposals = project.proposals.find(:all, :conditions => {:student_id => current_user.id})
+      end
       student? && proposals.empty?
     end
     
