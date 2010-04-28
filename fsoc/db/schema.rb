@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100421111237) do
+ActiveRecord::Schema.define(:version => 20100426095338) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(:version => 20100421111237) do
     t.integer  "mentor_id"
     t.integer  "student_id"
     t.string   "urls"
+  end
+
+  create_table "proposals", :force => true do |t|
+    t.integer  "project_id"
+    t.integer  "student_id"
+    t.text     "proposal_text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

@@ -1,0 +1,25 @@
+<div class="post">
+	<h2 class="title">New proposal for <%=h @proposal.project.name %></h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+<% form_for @proposal, :url => project_proposals_url do |f| %>
+  <%= f.error_messages %>
+    <%= f.hidden_field :student_id, :value => current_user.id %>
+    <%= f.hidden_field :project_id, :value => @proposal.project.id %>
+    <p>
+      <b>Proposed by:</b> <%=h current_user.login %>
+    </p>
+
+    <p>
+      <b><%= f.label :proposal_text %></b><br />
+      <%= f.text_area :proposal_text %>
+    </p>
+    
+    <p>
+      <%= f.submit 'Create' %>
+    </p>
+<% end %>
+
+	</div>
+</div>

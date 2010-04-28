@@ -1,0 +1,21 @@
+<div class="post">
+	<h2 class="title">Proposal for <%=h @proposal.project.name %></h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+
+    <p>
+      <b>Proposed by:</b> <%=h @proposal.student.login %>
+    </p>
+
+    <p>
+      <b>Proposal Text :</b><br />
+      <%=h @proposal.proposal_text %>
+    </p>
+    
+	<p class="links">
+	  <%= link_to 'Edit this proposal', edit_project_proposal_path %> | 
+	  <%= link_to 'Back to project', project_path(@proposal.project) %>
+	</p>
+	</div>
+</div>

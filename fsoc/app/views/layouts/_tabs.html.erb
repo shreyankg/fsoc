@@ -5,7 +5,7 @@
 <% end %>
 
 <li
-  <%= highlighted if highlight == "projects" -%>
+  <%= highlighted if highlight == "projects" || highlight == 'proposals' -%>
 ><a href="/projects">Projects</a></li>
 
 <% if logged_in? %>

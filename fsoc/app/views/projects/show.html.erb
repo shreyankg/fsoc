@@ -29,13 +29,36 @@
 <p>
   <b>Estimated Time (in days):</b> <%=h @project.eta %>
 </p>
+<% if !@project.proposals.empty? %>
+  <br /><br >
+  <h3>Listing proposals</h3>
 
-		<p class="links">
-		<% if can_edit_project?(@project) %>
-		  <%= link_to 'Edit', edit_project_path(@project) %> |
-		<% end %>
-      <%= link_to 'Back to projects', projects_path %>
-    </p>
+    <table id="hor-minimalist-a">
+      <tr>
+        <th>Student</th>
+        <th>Proposal</th>
+      </tr>
+
+    <% @project.proposals.each do |proposal| %>
+      <tr>
+        <td><%= link_to_user proposal.student %>
+        <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(@project, proposal) %></td>
+        <td><%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %></td>
+        <td><%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %></td>        
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+	<p class="links">
+	<% if can_edit_project?(@project) %>
+	  <%= link_to 'Edit', edit_project_path(@project) %> |
+	<% end %>
+	<% if student? %>
+	  <%= link_to 'Write a proposal', new_project_proposal_path(@project) %> |
+	<% end %>		
+    <%= link_to 'Back to projects', projects_path %>
+  </p>
 
 	</div>
 </div>

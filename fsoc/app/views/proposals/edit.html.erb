@@ -1,0 +1,24 @@
+<div class="post">
+	<h2 class="title">Edit proposal for <%=h @proposal.project.name %></h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+<% form_for @proposal, :url => project_proposal_path do |f| %>
+  <%= f.error_messages %>
+
+    <p>
+      <b>Proposed by:</b> <%=h @proposal.student.login %>
+    </p>
+
+    <p>
+      <b><%= f.label :proposal_text %></b><br />
+      <%= f.text_area :proposal_text %>
+    </p>
+    
+    <p>
+      <%= f.submit 'Update' %>
+    </p>
+<% end %>
+
+	</div>
+</div>

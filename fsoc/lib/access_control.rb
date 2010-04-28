@@ -25,12 +25,21 @@ module AccessControl
       logged_in? && ((current_user == project.proposer && !project.mentor) || current_user.user_type == 'admin')
     end
     
+    #proposal specific
+    def can_edit_proposal?(proposal)
+      true #TODO
+    end
+    
+    def can_delete_proposal?(proposal)
+      true #TODO
+    end    
 
     #Make available as ActionView helper methods.
     def self.included(base)
       if base.respond_to? :helper_method
         base.send :helper_method, :mentor?, :student?, :admin?
         base.send :helper_method, :can_edit_project?, :can_delete_project?
+        base.send :helper_method, :can_edit_proposal?, :can_delete_proposal?
       end
     end  
 end

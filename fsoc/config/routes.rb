@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resources :projects
+  map.resources :projects do |project| project.resources :proposals end
 
   # The priority is based upon order of creation: first created -> highest priority.
 
