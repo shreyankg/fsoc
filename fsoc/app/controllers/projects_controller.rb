@@ -15,6 +15,13 @@ class ProjectsController < ApplicationController
   # GET /projects/1.xml
   def show
     @project = Project.find(params[:id])
+    @proposals = Array.new
+    if student?
+      @proposals = @project.proposals.find(:all, :conditions => {:student_id => current_user.id})
+    end
+    if can_view_proposal_list?(@project)
+      @proposals = @project.proposals
+    end
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @project }

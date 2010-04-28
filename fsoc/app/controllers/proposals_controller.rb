@@ -3,11 +3,25 @@ class ProposalsController < ApplicationController
   
   def show
     @proposal = Proposal.find(params[:id])
+    if !can_view_proposal?(@proposal)
+      flash[:notice] = 'You are not authorised to access this proposal.'
+      redirect_to(Project.find(params[:project_id]))
+    end    
   end
 
   def new
-    @proposal = Proposal.new
-    @proposal.project = Project.find(params[:project_id])
+    project = Project.find(params[:project_id])
+    if can_add_proposal?(project)
+      @proposal = Proposal.new
+      @proposal.project = project
+    else
+      if student?
+        flash[:notice] = 'You are not allowed to submit more than one proposal.'
+      else
+        flash[:notice] = 'You are not allowed to submit proposals.'
+      end
+      redirect_to(project)
+    end
   end
 
   def edit
@@ -45,7 +59,7 @@ class ProposalsController < ApplicationController
 
   def destroy
     @proposal = Proposal.find(params[:id])
-    if !can_delete_proposal?(@proposal)
+    if !can_edit_proposal?(@proposal)
       flash[:notice] = 'You are not authorised to delete this proposal.'
       redirect_to project_proposals_url
     end

@@ -14,7 +14,9 @@
     </p>
     
 	<p class="links">
-	  <%= link_to 'Edit this proposal', edit_project_proposal_path %> | 
+	  <% if can_edit_proposal?(@proposal) %>
+  	  <%= link_to 'Edit this proposal', edit_project_proposal_path %> | 
+  	<% end %>
 	  <%= link_to 'Back to project', project_path(@proposal.project) %>
 	</p>
 	</div>

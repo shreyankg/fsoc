@@ -5,15 +5,15 @@ module AccessControl
 
     #user specific
     def mentor?
-      logged_in? and current_user.user_type == "mentor"
+      logged_in? && current_user.user_type == "mentor"
     end
       
     def student?
-      logged_in? and current_user.user_type == "student"
+      logged_in? && current_user.user_type == "student"
     end
     
     def admin?
-      logged_in? and current_user.user_type == "admin"
+      logged_in? && current_user.user_type == "admin"
     end 
     
     #project specific
@@ -26,20 +26,30 @@ module AccessControl
     end
     
     #proposal specific
-    def can_edit_proposal?(proposal)
-      true #TODO
+    def can_add_proposal?(project)
+      proposals = project.proposals.find(:all, :conditions => {:student_id => current_user.id})
+      student? && proposals.empty?
     end
     
-    def can_delete_proposal?(proposal)
-      true #TODO
-    end    
+    def can_view_proposal_list?(project)
+      (mentor? && project.mentor == current_user) || admin?
+    end
+        
+    def can_edit_proposal?(proposal)
+      (student? && proposal.student == current_user) || admin?
+    end
 
+    
+    def can_view_proposal?(proposal)
+      (student? && proposal.student == current_user) || can_view_proposal_list?(proposal.project)
+    end
+    
     #Make available as ActionView helper methods.
     def self.included(base)
       if base.respond_to? :helper_method
         base.send :helper_method, :mentor?, :student?, :admin?
         base.send :helper_method, :can_edit_project?, :can_delete_project?
-        base.send :helper_method, :can_edit_proposal?, :can_delete_proposal?
+        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?
       end
     end  
 end
