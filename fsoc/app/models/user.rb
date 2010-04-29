@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_many :project_proposals, :class_name => "Project", :foreign_key => 'proposer_id'
   has_many :project_mentorships, :class_name => "Project", :foreign_key => 'mentor_id'
   has_many :project_internships, :class_name => "Project", :foreign_key => 'student_id'
-
+  has_many :proposals, :foreign_key => 'student_id'
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
