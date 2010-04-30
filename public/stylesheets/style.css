@@ -237,14 +237,15 @@ a:hover {
 }
 
 .post .meta {
-	height: 10px;
-	background: #D8E7FE;
+	height: 5px;
+	background: #659CEF;
 	margin: 0px;
 	padding: 0px 0px 0px 0px;
 	text-align: left;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
+	-moz-border-radius: .3em;
 }
 
 .post .meta .date {
@@ -276,6 +277,12 @@ a:hover {
 	padding-top: 20px;
 	font-size: 12px;
 	font-weight: bold;
+}
+
+.links a {
+  padding: 5px;
+  background-color: #D8E7FE;
+  -moz-border-radius: .5em;
 }
 
 /* Sidebar */
