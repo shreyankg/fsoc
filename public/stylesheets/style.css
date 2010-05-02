@@ -246,6 +246,7 @@ a:hover {
 	font-size: 13px;
 	font-weight: bold;
 	-moz-border-radius: .3em;
+	-webkit-border-radius: .3em;	
 }
 
 .post .meta .date {
@@ -283,6 +284,7 @@ a:hover {
   padding: 5px;
   background-color: #D8E7FE;
   -moz-border-radius: .5em;
+  -webkit-border-radius: .5em;  
 }
 
 /* Sidebar */

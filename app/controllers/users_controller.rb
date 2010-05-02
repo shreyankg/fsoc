@@ -20,8 +20,8 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.xml
   def index
-    @users = User.all
-
+    @users = User.all :conditions => [ "user_type != 'admin'"]
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }
