@@ -59,6 +59,7 @@
         <tr>
           <th>Student</th>
           <th>Proposal</th>
+          <th />
         </tr>
 
       <% @proposals.each do |proposal| %>
@@ -66,8 +67,10 @@
           <td><%= link_to_user proposal.student %>
           <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(@project, proposal) %></td>
           <% if can_edit_proposal?(proposal) %>
-            <td><%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %></td>
-            <td><%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %></td>        
+            <td>
+              <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
+              <%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %>
+            </td>        
           <% end %>
         </tr>
       <% end %>

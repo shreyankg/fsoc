@@ -29,13 +29,20 @@
         <th>Proposed by</th>
         <th>Mentor</th>
         <th>Estimated Time <br />(in days)</th>
+        <th />
       </tr>
 
     <% @projects.each do |project| %>
       <tr>
         <td><%= link_to project.name, project %>
-        <td><%=h project.proposer.login %></td>
-        <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>
+        <td><%= link_to_user project.proposer %></td>
+        <td>
+          <% if project.mentor %>
+            <%= link_to_user project.mentor %>
+          <% else %>
+            Nobody
+          <% end %>
+        </td>
         <td><%=h project.eta %></td>
         <td>
         <% if can_edit_project?(project) %>

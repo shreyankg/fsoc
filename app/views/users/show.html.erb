@@ -65,13 +65,13 @@
       <tr>
         <th>Name</th>
         <th>Mentor</th>
+        <th />        
       </tr>
 
     <% @user.project_proposals.each do |project| %>
       <tr>
         <td><%= link_to project.name, project %>
         <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>
-        <td><%=h project.eta %></td>
         <td>
         <% if can_edit_project?(project) %>
           <%= link_to 'Edit', edit_project_path(project) %>
@@ -93,13 +93,13 @@
         <tr>
           <th>Name</th>
           <th>Proposed by</th>
+          <th />
         </tr>
 
       <% @user.project_mentorships.each do |project| %>
         <tr>
           <td><%= link_to project.name, project %>
           <td><%=h project.proposer.login %></td>
-          <td><%=h project.eta %></td>
           <td>
           <% if can_edit_project?(project) %>
             <%= link_to 'Edit', edit_project_path(project) %>
@@ -132,7 +132,6 @@
           <td><%= link_to project.name, project %>
           <td><%=h project.proposer.login %></td>
           <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>        
-          <td><%=h project.eta %></td>
           <td>
           <% if can_edit_project?(project) %>
             <%= link_to 'Edit', edit_project_path(project) %>
