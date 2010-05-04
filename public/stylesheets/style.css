@@ -287,6 +287,11 @@ a:hover {
   -webkit-border-radius: .5em;  
 }
 
+.links a:hover {
+  color: #D8E7FE;
+  background-color: #4486C7;
+}
+
 /* Sidebar */
 
 #sidebar {
