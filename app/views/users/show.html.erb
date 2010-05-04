@@ -44,7 +44,7 @@
 <p>
   <b>Contact on IRC:</b>
   <br />
-  <%=h dash [@user.irc_nick, 'on', @user.irc_channels] %>
+  <%=h dash [@user.irc_nick, ' on ', @user.irc_channels] %>
 </p>
         
 <p>
@@ -56,6 +56,13 @@
   <b>About me:</b>
   <br />
   <%=h dash @user.bio %> 
+</p>
+
+<p class="links">
+<% if logged_in? and @user == current_user %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+<% end %>
+  <%= link_to 'Back to users', users_path %>
 </p>
 
 <% if !@user.project_proposals.empty? %>
@@ -147,13 +154,6 @@
     <h3>Not student for any projects</h3>
   <% end %>
 <% end %>
-
-<p class="links">
-<% if logged_in? and @user == current_user %>
-  <%= link_to 'Edit', edit_user_path(@user) %> |
-<% end %>
-  <%= link_to 'Back to users', users_path %>
-</p>
 
 	</div>
 </div>

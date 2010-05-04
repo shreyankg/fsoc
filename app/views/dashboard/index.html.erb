@@ -35,7 +35,7 @@
     <% current_user.project_proposals.each do |project| %>
       <tr>
         <td><%= link_to project.name, project %>
-        <td><%=h project.mentor ? project.mentor.login: "Nobody" %></td>
+        <td><%= project.mentor ? link_to_user(project.mentor) : "Nobody" %></td>
         <td>
         <% if can_edit_project?(project) %>
           <%= link_to 'Edit', edit_project_path(project) %>
@@ -68,7 +68,7 @@
       <% current_user.project_mentorships.each do |project| %>
         <tr>
           <td><%= link_to project.name, project %>
-          <td><%=h project.proposer.login %></td>
+          <td><%= link_to_user project.proposer %></td>
           <td>
           <% if can_edit_project?(project) %>
             <%= link_to 'Edit', edit_project_path(project) %>

@@ -49,6 +49,17 @@
   <b>Estimated Time (in days):</b> <%=h @project.eta %>
 </p>
 
+	<p class="links">
+	<% if can_edit_project?(@project) %>
+	  <%= link_to 'Edit project', edit_project_path(@project) %> |
+	<% end %>
+	<% if can_add_proposal?(@project) %>
+	  <%= link_to 'Write a proposal', new_project_proposal_path(@project) %> |
+	<% end %>		
+    <%= link_to 'Back to projects', projects_path %>
+  </p>
+
+
   <br />
 <% if can_view_proposal_list?(@project) || student? %>
   <% if !@proposals.empty? %>
@@ -81,16 +92,6 @@
 <% else %>
   <h3>You are not authorised to view the proposals list</h3>
 <% end %>
-
-	<p class="links">
-	<% if can_edit_project?(@project) %>
-	  <%= link_to 'Edit project', edit_project_path(@project) %> |
-	<% end %>
-	<% if can_add_proposal?(@project) %>
-	  <%= link_to 'Write a proposal', new_project_proposal_path(@project) %> |
-	<% end %>		
-    <%= link_to 'Back to projects', projects_path %>
-  </p>
 
 	</div>
 </div>
