@@ -1,0 +1,136 @@
+<%
+#--
+#   Copyright (C) 2010 Shreyank Gupta <sgupta@REDHAT.COM>
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
+#
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#++
+%>
+
+
+<% if !user.project_proposals.empty? %>
+  <br />
+  <h3>Projects proposed by <%=h user.login %></h3>
+		<table id="hor-minimalist-a">
+      <tr>
+        <th>Name</th>
+        <th>Mentor</th>
+        <th />        
+      </tr>
+
+    <% user.project_proposals.each do |project| %>
+      <tr>
+        <td><%= link_to project.name, project %>
+        <td><%= project.mentor ? link_to_user(project.mentor): "Nobody" %></td>
+        <td>
+        <% if can_edit_project?(project) %>
+          <%= link_to 'Edit', edit_project_path(project) %>
+        <% end %>
+        <%= ' | ' if can_edit_project?(project) && can_delete_project?(project) %>
+        <% if can_delete_project?(project) %>
+        <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if mentor?(user) %>
+  <br />
+  <% if !user.project_mentorships.empty? %>
+    <h3>Projects mentored by <%=h user.login %></h3>
+		  <table id="hor-minimalist-a">
+        <tr>
+          <th>Name</th>
+          <th>Proposed by</th>
+          <th />
+        </tr>
+
+      <% user.project_mentorships.each do |project| %>
+        <tr>
+          <td><%= link_to project.name, project %>
+          <td><%= link_to_user project.proposer %></td>
+          <td>
+          <% if can_edit_project?(project) %>
+            <%= link_to 'Edit', edit_project_path(project) %>
+          <% end %>
+          <%= ' | ' if can_edit_project?(project) && can_delete_project?(project) %>
+          <% if can_delete_project?(project) %>
+          <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <h3>Not mentoring any projects</h3>
+  <% end %>
+<% end %>
+
+<% if student?(user) %>
+<br />
+  <% if !user.proposals.empty? %>
+    <h3><%=h user.login %> submitted the following proposals</h3>
+     <table id="hor-minimalist-a">
+        <tr>
+          <th>Project</th>
+          <th>Proposal</th>
+          <th />          
+        </tr>
+
+      <% user.proposals.each do |proposal| %>
+        <tr>
+          <td><%= link_to proposal.project.name, proposal.project %>
+          <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(proposal.project, proposal) %></td>
+          <% if can_edit_proposal?(proposal) %>
+            <td><%= link_to 'Edit', edit_project_proposal_path(proposal.project, proposal) %></td>
+            <td><%= link_to 'Delete', project_proposal_path(proposal.project, proposal), :confirm => 'Are you sure?', :method => :delete %></td>        
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <h3>Have not submitted any project proposal</h3>
+  <% end %>
+<% end %>  
+  
+<% if student?(user) %>
+  <br />
+  <% if !user.project_internships.empty? %>
+    <h3><%=h user.login %> is student for project</h3>
+		  <table id="hor-minimalist-a">
+        <tr>
+          <th>Name</th>
+          <th>Proposed by</th>
+          <th>Mentor</th>        
+        </tr>
+
+      <% user.project_mentorships.each do |project| %>
+        <tr>
+          <td><%= link_to project.name, project %>
+          <td><%= link_to_user project.proposer %></td>
+          <td><%= project.mentor ? link_to_user(project.mentor): "Nobody" %></td>        
+          <td>
+          <% if can_edit_project?(project) %>
+            <%= link_to 'Edit', edit_project_path(project) %>
+          <% end %>
+          <%= ' | ' if can_edit_project?(project) && can_delete_project?(project) %>
+          <% if can_delete_project?(project) %>
+          <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <h3>Not student for any projects</h3>
+  <% end %>
+<% end %>
