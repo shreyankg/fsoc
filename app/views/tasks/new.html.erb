@@ -1,3 +1,4 @@
+<%
 #--
 #   Copyright (C) 2010 Shreyank Gupta <sgupta@REDHAT.COM>
 #
@@ -14,14 +15,26 @@
 #   You should have received a copy of the GNU Affero General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #++
+%>
 
-class Project < ActiveRecord::Base
-  validates_presence_of     :name, :definition, :eta
-  validates_numericality_of :eta, :greater_than => 0
-  
-  belongs_to :proposer, :class_name => "User", :foreign_key => "proposer_id"
-  belongs_to :mentor, :class_name => "User", :foreign_key => "mentor_id"
-  belongs_to :student, :class_name => "User", :foreign_key => "student_id"
-  has_many :proposals
-  has_many :tasks
-end
+<div class="post">
+	<h2 class="title">New task for <%=h @task.project.name %></h2>
+	<p class="meta"><span class="date">&nbsp;</span></p>
+	<div style="clear: both;">&nbsp;</div>
+	<div class="entry">
+<% form_for @task, :url => project_tasks_url do |f| %>
+  <%= f.error_messages %>
+    <%= f.hidden_field :student_id, :value => current_user.id %>
+    <%= f.hidden_field :project_id, :value => @task.project.id %>
+    <p>
+      <b><%= f.label :task_text %></b><br />
+      <%= f.text_area :task_text %>
+    </p>
+    
+    <p>
+      <%= f.submit 'Create' %>
+    </p>
+<% end %>
+
+	</div>
+</div>

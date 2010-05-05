@@ -39,6 +39,7 @@ p, ul, ol {
 }
 
 ul, ol {
+  padding-left: 20px;
 }
 
 a {

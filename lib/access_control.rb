@@ -64,12 +64,31 @@ module AccessControl
       (student? && proposal.student == current_user) || can_view_proposal_list?(proposal.project)
     end
     
+    #task specific
+    def can_add_task?(project)
+      true
+    end
+    
+    def can_view_task_list?(project)
+      true
+    end
+        
+    def can_edit_task?(task)
+      true
+    end
+
+    
+    def can_view_task?(task)
+      true
+    end
+    
     #Make available as ActionView helper methods.
     def self.included(base)
       if base.respond_to? :helper_method
         base.send :helper_method, :mentor?, :student?, :admin?
         base.send :helper_method, :can_edit_project?, :can_delete_project?
         base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?
+        base.send :helper_method, :can_add_task?, :can_edit_task?, :can_view_task_list?
       end
     end  
 end

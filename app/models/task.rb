@@ -15,13 +15,8 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #++
 
-class Project < ActiveRecord::Base
-  validates_presence_of     :name, :definition, :eta
-  validates_numericality_of :eta, :greater_than => 0
+class Task < ActiveRecord::Base
+  validates_presence_of :task_text
   
-  belongs_to :proposer, :class_name => "User", :foreign_key => "proposer_id"
-  belongs_to :mentor, :class_name => "User", :foreign_key => "mentor_id"
-  belongs_to :student, :class_name => "User", :foreign_key => "student_id"
-  has_many :proposals
-  has_many :tasks
+  belongs_to :project
 end
