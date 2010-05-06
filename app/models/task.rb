@@ -17,6 +17,7 @@
 
 class Task < ActiveRecord::Base
   validates_presence_of :task_text
-  
+  belongs_to :author, :class_name => "User", :foreign_key => "author_id"
+  belongs_to :student, :class_name => "User", :foreign_key => "student_id"
   belongs_to :project
 end

@@ -27,7 +27,10 @@
       <b>Task Text :</b><br />
       <%=h @task.task_text %>
     </p>
-    
+     <p>
+      <b>Task Author :</b><br />
+      <%= link_to_user @task.author %>
+    </p>   
 	<p class="links">
 	  <% if can_edit_task?(@task) %>
   	  <%= link_to 'Edit this task', edit_project_task_path %> | 

@@ -48,6 +48,7 @@ class TasksController < ApplicationController
   def create
 
     @task = Task.new(params[:task])
+    @task.author = current_user
     if @task.save
       flash[:notice] = 'Task was successfully created.'
       redirect_to :action => 'show', :id => @task.id
