@@ -91,10 +91,10 @@
         <tr>
           <td><%= link_to proposal.project.name, proposal.project %>
           <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(proposal.project, proposal) %></td>
-          <% if can_edit_proposal?(proposal) %>
-            <td><%= link_to 'Edit', edit_project_proposal_path(proposal.project, proposal) %></td>
-            <td><%= link_to 'Delete', project_proposal_path(proposal.project, proposal), :confirm => 'Are you sure?', :method => :delete %></td>        
-          <% end %>
+          <td><% if can_edit_proposal?(proposal) %>
+            <%= link_to 'Edit', edit_project_proposal_path(proposal.project, proposal) %> | 
+            <%= link_to 'Delete', project_proposal_path(proposal.project, proposal), :confirm => 'Are you sure?', :method => :delete %>     
+          <% end %></td>
         </tr>
       <% end %>
     </table>
