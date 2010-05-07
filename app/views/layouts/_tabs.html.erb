@@ -17,21 +17,23 @@
 #++
 %>
 
-<% if logged_in? %>
 <li
   <%= highlighted if highlight == "dashboard" -%>
-><a href="/">Dashboard</a></li>
+><a href="/">
+<% if logged_in? %>
+  Dashboard
+<% else %>
+  Welcome
 <% end %>
+  </a></li>
 
 <li
   <%= highlighted if highlight == "projects" || highlight == "proposals" || highlight == "tasks" -%>
 ><a href="/projects">Projects</a></li>
 
-<% if logged_in? %>
 <li
   <%= highlighted if highlight == "users" -%>
 ><a href="/users">Users</a></li>
-<% end %>
 
 <% if logged_in? %>
 <li
