@@ -16,7 +16,7 @@
 #++
 
 class TasksController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => 'show'
   
   def show
     @task = Task.find(params[:id])
@@ -32,7 +32,7 @@ class TasksController < ApplicationController
       @task = Task.new
       @task.project = project
     else
-      flash[:notice] = 'You are not allowed to submit tasks.'
+      flash[:notice] = 'You are not allowed to add tasks.'
       redirect_to(project)
     end
   end

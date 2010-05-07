@@ -22,11 +22,19 @@ module AccessControl
 
     #user specific
     def mentor?(user = current_user)
-      logged_in? && user.user_type == "mentor"
+      if user == current_user
+        logged_in? && user.user_type == "mentor"
+      else
+        user.user_type == "mentor"
+      end
     end
       
     def student?(user = current_user)
-      logged_in? && user.user_type == "student"
+      if user == current_user
+        logged_in? && user.user_type == "student"
+      else
+        user.user_type == "student"
+      end
     end
     
     def admin?(user = current_user)
@@ -59,14 +67,17 @@ module AccessControl
       (student? && proposal.student == current_user) || admin?
     end
 
-    
     def can_view_proposal?(proposal)
       (student? && proposal.student == current_user) || can_view_proposal_list?(proposal.project)
     end
     
+    def can_view_user_proposal_list?(user)
+      user == current_user || admin? || mentor?
+    end
+    
     #task specific
     def can_add_task?(project)
-      true
+      can_edit_project?(project)
     end
     
     def can_view_task_list?(project)
@@ -74,7 +85,7 @@ module AccessControl
     end
         
     def can_edit_task?(task)
-      true
+      can_edit_project?(task.project) && task.author == current_user
     end
 
     
@@ -87,7 +98,7 @@ module AccessControl
       if base.respond_to? :helper_method
         base.send :helper_method, :mentor?, :student?, :admin?
         base.send :helper_method, :can_edit_project?, :can_delete_project?
-        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?
+        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?, :can_view_user_proposal_list?
         base.send :helper_method, :can_add_task?, :can_edit_task?, :can_view_task_list?
       end
     end  

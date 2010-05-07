@@ -76,7 +76,7 @@
   <% end %>
 <% end %>
 
-<% if student?(user) %>
+<% if student?(user) && can_view_user_proposal_list?(user) %>
 <br />
   <% if !user.proposals.empty? %>
     <h3><%=h user.login %> submitted the following proposals</h3>
