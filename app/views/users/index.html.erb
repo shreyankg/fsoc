@@ -22,6 +22,7 @@
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
+<% if !@users.empty? %>
 		<table id="hor-minimalist-a">
   <tr>
     <th>Username</th>
@@ -29,15 +30,17 @@
     <th>User Type</th>
   </tr>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= link_to_user user %>
-    <td><%=h sanitize(user.email) %></td>
-    <td><%=h user.user_type %></td>
- 
-  </tr>
-<% end %>
-</table>
-
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to_user user %>
+        <td><%=h sanitize(user.email) %></td>
+        <td><%=h user.user_type %></td>
+      </tr>
+    <% end %>
+    </table>
+<% else %>
+      <b>No users around!</b>
+      <p class="links"><%= link_to 'Login', login_path %> or <%= link_to 'Signup', signup_path %> to get started.</p>    
+<% end %>    
 	</div>
 </div>

@@ -22,13 +22,20 @@
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
-
     <p>
-      <b>Task Text :</b><br />
-      <%=h @task.task_text %>
+      <b>Title :</b>
+      <%=h @task.title %>
+    </p>
+    <p>
+      <b>Description :</b><br />
+      <%=h @task.description %>
     </p>
      <p>
-      <b>Task Author :</b><br />
+      <b>Estimated time :</b>
+      <%=h @task.eta %> days
+    </p>      
+     <p>
+      <b>Task Author :</b>
       <%= link_to_user @task.author %>
     </p>   
 	<p class="links">

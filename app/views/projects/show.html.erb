@@ -46,7 +46,7 @@
   <b>Proposed by:</b> <%= link_to_user @project.proposer %>
 </p>
 <p>
-  <b>Estimated Time (in days):</b> <%=h @project.eta %>
+  <b>Estimated Time:</b> <%=h @project.eta %> days
 </p>
 
 <p>  
@@ -55,7 +55,7 @@
       <b>Atomic Tasks for <%=h @project.name %> </b>
         <ul>
         <% @tasks.each do |task| %>
-          <li><%= link_to truncate(task.task_text, 50, '...'), project_task_path(@project, task) %> 
+          <li><%= link_to task.title, project_task_path(@project, task) %> 
             <% if can_edit_task?(task) %>
                 ( <%= link_to 'Edit', edit_project_task_path(@project, task) %> ) | 
                 ( <%= link_to 'Delete', project_task_path(@project, task), :confirm => 'Are you sure?', :method => :delete %> )
@@ -64,7 +64,7 @@
         <% end %>
         </ul>          
     <% else %>
-      <b>Empty tasks list</b>
+      <b> - Empty tasks list - </b>
     <% end %>
   <% else %>
     <b>You are not authorised to view the tasks list</b>
