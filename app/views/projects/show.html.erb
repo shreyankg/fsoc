@@ -84,7 +84,7 @@
     <%= link_to 'Back to projects', projects_path %>
   </p>
 
-
+<hr />
   <br />
 <% if can_view_proposal_list?(@project) || student? %>
   <% if !@proposals.empty? %>
@@ -101,7 +101,7 @@
       <% @proposals.each do |proposal| %>
         <tr>
           <td><%= link_to_user proposal.student %>
-          <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(@project, proposal) %></td>
+          <td><%= link_to truncate(proposal.proposal_text, 45, '...'), project_proposal_path(@project, proposal) %></td>
           <td>
             <% if can_edit_proposal?(proposal) %>
                 <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
