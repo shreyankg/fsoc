@@ -18,7 +18,7 @@
 %>
 
 <div class="post">
-	<h2 class="title">Proposal for <%=h @proposal.project.name %></h2>
+	<h2 class="title">Accept proposal for <%=h @proposal.project.name %></h2>
 	<p class="meta"><span class="date">&nbsp;</span></p>
 	<div style="clear: both;">&nbsp;</div>
 	<div class="entry">
@@ -31,14 +31,31 @@
       <b>Proposal Text :</b><br />
       <%=h @proposal.proposal_text %>
     </p>
-    
+    <h3>Allocate tasks</h3>
+      <br >
+      <% form_tag accepted_tasks_path, :method => :put do %>
+      <%= hidden_field_tag 'student_id', @proposal.student.id %>
+      <table id="hor-minimalist-a">
+        <tr>
+          <th />
+          <th>Task</th>
+          <th>Estimated time<br />(in days)</th>
+          <th>Expected delivery date</th>
+        </tr>
+
+        <% @tasks.each do |task| %>
+          <tr>
+            <td><%= check_box_tag "task_ids[]", task.id, checked = true %></td>
+            <td><%= link_to task.title, project_task_path(@proposal.project, task) %></td>
+            <td><%=h task.eta %></td>
+            <td><%= select_date Date.today, :prefix => "task_#{task.id}" %></td>
+          </tr>
+        <% end %>
+       </table>
+       <%= submit_tag "Complete allocation" %>
+
+       <% end %>    
 	<p class="links">
-	  <% if can_edit_proposal?(@proposal) %>
-  	  <%= link_to 'Edit this proposal', edit_project_proposal_path %> | 
-  	<% end %>
-    <% if can_accept_proposal?(@proposal) %>
-      <%= link_to 'Accept', accept_project_proposal_path(@proposal.project, @proposal) %> |
-    <% end %>
 	  <%= link_to 'Back to project', project_path(@proposal.project) %>
 	</p>
 	</div>

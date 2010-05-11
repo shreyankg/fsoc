@@ -81,5 +81,19 @@ class TasksController < ApplicationController
     flash[:notice] = 'Task deleted!'
     redirect_to project_path(@task.project)
   end
+  
+  def accepted
+    tasks = Task.find(params[:task_ids])
+    student_id = params[:student_id]
+    tasks.each do |task|
+      end_date = params["task_#{task.id}".to_sym]
+      end_date = Date.civil(end_date[:year].to_i, end_date[:month].to_i, end_date[:day].to_i)
+      task.update_attributes(:end_date => end_date, :student_id => student_id)
+    end
+    project = tasks.first.project
+    project.update_attributes(:student_id => student_id)
+    flash[:notice] = 'Project successfully allocated.'
+    redirect_to project
+  end
 
 end

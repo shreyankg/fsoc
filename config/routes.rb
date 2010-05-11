@@ -28,7 +28,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects
   map.resources :projects do |project| project.resources :proposals end
   map.resources :projects do |project| project.resources :tasks end
-  
+  map.accept_project_proposal '/projects/:project_id/proposals/:id/accept', :controller => 'proposals', :action => 'accept'
+  map.resources :tasks, :collection => { :accepted => :put }
   # The priority is based upon order of creation: first created -> highest priority.
 
   # Sample of regular route:

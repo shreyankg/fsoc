@@ -24,4 +24,5 @@ class Project < ActiveRecord::Base
   belongs_to :student, :class_name => "User", :foreign_key => "student_id"
   has_many :proposals
   has_many :tasks
+  has_many :unallocated_tasks, :class_name => 'Task', :conditions => { :student_id => nil }
 end

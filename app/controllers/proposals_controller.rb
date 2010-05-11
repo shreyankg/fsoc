@@ -84,4 +84,9 @@ class ProposalsController < ApplicationController
     flash[:notice] = 'Project proposal deleted!'
     redirect_to project_path(@proposal.project)
   end
+  
+  def accept
+    @proposal = Proposal.find(params[:id])
+    @tasks = @proposal.project.unallocated_tasks
+  end
 end

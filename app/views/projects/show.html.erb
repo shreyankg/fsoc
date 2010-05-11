@@ -52,17 +52,36 @@
 <p>  
   <% if can_view_task_list?(@project) %>
     <% if !@tasks.empty? %>
-      <b>Atomic Tasks for <%=h @project.name %> </b>
-        <ul>
+      <h3>Atomic Tasks for <%=h @project.name %> </h3>
+      <br />
+      <table id="hor-minimalist-a">
+        <tr>
+          <th>Task</th>
+          <th>Student</th>
+          <th>Expected<br /> delivery date</th>
+          <th />
+        </tr>
+
         <% @tasks.each do |task| %>
-          <li><%= link_to task.title, project_task_path(@project, task) %> 
-            <% if can_edit_task?(task) %>
-                ( <%= link_to 'Edit', edit_project_task_path(@project, task) %> ) | 
-                ( <%= link_to 'Delete', project_task_path(@project, task), :confirm => 'Are you sure?', :method => :delete %> )
-            <% end %>
-          </li>
+          <tr>
+            <td><%= link_to task.title, project_task_path(@project, task) %></td>
+            <td>
+              <% if task.student %>           
+                <%= link_to_user task.student %>
+              <% else %>
+                -
+              <% end %>
+            </td>
+            <td><%=h dash task.end_date %></td>
+            <td>
+              <% if can_edit_task?(task) %>
+                <%= link_to 'Edit', edit_project_task_path(@project, task) %> | 
+                <%= link_to 'Delete', project_task_path(@project, task), :confirm => 'Are you sure?', :method => :delete %>
+              <% end %>
+            </td>
+          </tr>
         <% end %>
-        </ul>          
+       </table>     
     <% else %>
       <b> - Empty tasks list - </b>
     <% end %>
@@ -104,8 +123,11 @@
           <td><%= link_to truncate(proposal.proposal_text, 45, '...'), project_proposal_path(@project, proposal) %></td>
           <td>
             <% if can_edit_proposal?(proposal) %>
-                <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
-                <%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %>
+              <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
+              <%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %>
+            <% end %>
+            <% if can_accept_proposal?(proposal) %>
+              <%= link_to 'Accept', accept_project_proposal_path(@project, proposal) %>
             <% end %>
           </td>           
         </tr>
