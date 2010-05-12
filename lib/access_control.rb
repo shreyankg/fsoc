@@ -102,7 +102,8 @@ module AccessControl
       if base.respond_to? :helper_method
         base.send :helper_method, :mentor?, :student?, :admin?
         base.send :helper_method, :can_edit_project?, :can_delete_project?
-        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?, :can_view_user_proposal_list?, :can_accept_proposal?
+        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?, :can_view_user_proposal_list?
+        base.send :helper_method, :can_accept_proposal?
         base.send :helper_method, :can_add_task?, :can_edit_task?, :can_view_task_list?
       end
     end  

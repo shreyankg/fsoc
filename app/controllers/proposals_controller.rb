@@ -85,8 +85,22 @@ class ProposalsController < ApplicationController
     redirect_to project_path(@proposal.project)
   end
   
-  def accept
+  def allocate
     @proposal = Proposal.find(params[:id])
     @tasks = @proposal.project.unallocated_tasks
+  end
+  
+  def allocated
+    @tasks = Task.find(params[:task_ids])
+    #student_id = params[:student_id]
+    @proposal = Proposal.find(params[:id])
+    @tasks.each do |task|
+      end_date = params["task_#{task.id}".to_sym]
+      end_date = Date.civil(end_date[:year].to_i, end_date[:month].to_i, end_date[:day].to_i)
+      task.update_attributes(:end_date => end_date, :proposal => @proposal)
+    end
+    @proposal.update_attributes(:accepted => true)
+    flash[:notice] = 'Project tasks successfully allocated.'
+    redirect_to @proposal.project
   end
 end

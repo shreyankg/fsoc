@@ -108,7 +108,7 @@
 <% if can_view_proposal_list?(@project) || student? %>
   <% if !@proposals.empty? %>
 
-    <h3>Listing proposals</h3>
+    <h3>Listing student proposals</h3>
       <br >
       <table id="hor-minimalist-a">
         <tr>
@@ -127,7 +127,7 @@
               <%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %>
             <% end %>
             <% if can_accept_proposal?(proposal) %>
-              <%= link_to 'Accept', accept_project_proposal_path(@project, proposal) %>
+              <%= link_to verb(proposal), allocate_project_proposal_path(@project, proposal) %>
             <% end %>
           </td>           
         </tr>

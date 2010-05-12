@@ -33,8 +33,7 @@
     </p>
     <h3>Allocate tasks</h3>
       <br >
-      <% form_tag accepted_tasks_path, :method => :put do %>
-      <%= hidden_field_tag 'student_id', @proposal.student.id %>
+      <% form_tag allocated_project_proposal_path, :method => :put do %>
       <table id="hor-minimalist-a">
         <tr>
           <th />
@@ -52,7 +51,7 @@
           </tr>
         <% end %>
        </table>
-       <%= submit_tag "Complete allocation" %>
+       <%= submit_tag "Submit" %>
 
        <% end %>    
 	<p class="links">

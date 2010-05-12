@@ -16,4 +16,11 @@
 #++
 
 module ProjectsHelper
+  def verb(proposal)
+    if proposal.accepted
+      'Allocate more tasks'
+    else
+      'Accept and allocate tasks'
+    end
+  end
 end
