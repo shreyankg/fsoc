@@ -64,7 +64,7 @@ module AccessControl
     end
         
     def can_edit_proposal?(proposal)
-      (student? && proposal.student == current_user) || admin?
+      (student? && proposal.student == current_user && proposal.status == 'pending') || admin?
     end
 
     def can_view_proposal?(proposal)
