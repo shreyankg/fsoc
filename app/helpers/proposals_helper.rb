@@ -16,4 +16,5 @@
 #++
 
 module ProposalsHelper
+
 end

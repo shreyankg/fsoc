@@ -76,7 +76,7 @@ module AccessControl
     end
     
     def can_accept_proposal?(proposal)
-      mentor? && proposal.project.mentor == current_user
+      mentor? && proposal.project.mentor == current_user && !proposal.project.unallocated_tasks.empty?
     end
     
     #task specific

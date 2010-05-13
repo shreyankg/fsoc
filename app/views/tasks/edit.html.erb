@@ -35,7 +35,13 @@
     <p>
       <b><%= f.label :eta, 'Estimated time (in days)' %></b><br />
       <%= f.text_field :eta %> 
-    </p>  
+    </p>
+    <% if @task.student %>
+    <p>
+      <b><%= f.label :end_date, 'Expected delivery date' %></b><br />
+      <%= date_select :task, :end_date %> 
+    </p>
+    <% end %>  
     <p>
       <%= f.submit 'Update' %>
     </p>

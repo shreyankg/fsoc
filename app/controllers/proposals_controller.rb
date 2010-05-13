@@ -86,7 +86,11 @@ class ProposalsController < ApplicationController
   end
   
   def allocate
-    @proposal = Proposal.find(params[:id])
+    @proposal = Proposal.find(params[:id])  
+    if !can_accept_proposal?(@proposal)
+      flash[:notice] = 'Cannot allocate tasks!'
+      redirect_to @proposal.project   
+    end
     @tasks = @proposal.project.unallocated_tasks
   end
   
@@ -99,7 +103,7 @@ class ProposalsController < ApplicationController
       end_date = Date.civil(end_date[:year].to_i, end_date[:month].to_i, end_date[:day].to_i)
       task.update_attributes(:end_date => end_date, :proposal => @proposal)
     end
-    @proposal.update_attributes(:accepted => true)
+    @proposal.update_attributes(:status => 'accepted')
     flash[:notice] = 'Project tasks successfully allocated.'
     redirect_to @proposal.project
   end

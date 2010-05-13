@@ -56,5 +56,11 @@ module ApplicationHelper
     return Project.all.reverse
   end
   
-
+  def verb(proposal)
+    if proposal.accepted
+      'Allocate more tasks'
+    else
+      'Accept and allocate tasks'
+    end
+  end
 end

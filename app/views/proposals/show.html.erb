@@ -31,13 +31,55 @@
       <b>Proposal Text :</b><br />
       <%=h @proposal.proposal_text %>
     </p>
+    <p>
+      <b>Status :</b>
+      <%=h @proposal.status.capitalize %>
+    </p>
+    <% if @proposal.status == 'accepted' %>
+      <% if can_view_task_list?(@proposal.project) %>
+    <% if !@proposal.tasks.empty? %>
+      <h3>Atomic Tasks for this proposal </h3>
+      <br />
+      <table id="hor-minimalist-a">
+        <tr>
+          <th>Task</th>
+          <th>Expected<br /> delivery date</th>
+          <th />
+        </tr>
+
+        <% @proposal.tasks.each do |task| %>
+          <tr>
+            <td><%= link_to task.title, project_task_path(@proposal.project, task) %></td>
+            <td>
+              <% if task.student %>           
+                <%=h task.end_date.to_formatted_s(:long) %>
+              <% else %>
+                -
+              <% end %>            
+            </td>
+            <td>
+              <% if can_edit_task?(task) %>
+                <%= link_to 'Edit', edit_project_task_path(@proposal.project, task) %> | 
+                <%= link_to 'Delete', project_task_path(@proposal.project, task), :confirm => 'Are you sure?', :method => :delete %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+       </table>     
+    <% else %>
+      <b> - Empty tasks list - </b>
+    <% end %>
+  <% else %>
+    <b>You are not authorised to view the tasks list</b>
+  <% end %>
+    <% end %>
     
 	<p class="links">
 	  <% if can_edit_proposal?(@proposal) %>
   	  <%= link_to 'Edit this proposal', edit_project_proposal_path %> | 
   	<% end %>
     <% if can_accept_proposal?(@proposal) %>
-      <%= link_to 'Accept', accept_project_proposal_path(@proposal.project, @proposal) %> |
+      <%= link_to verb(@proposal), allocate_project_proposal_path(@proposal.project, @proposal) %> |
     <% end %>
 	  <%= link_to 'Back to project', project_path(@proposal.project) %>
 	</p>

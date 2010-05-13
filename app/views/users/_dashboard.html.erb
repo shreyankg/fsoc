@@ -84,6 +84,7 @@
         <tr>
           <th>Project</th>
           <th>Proposal</th>
+          <th>Status</th>
           <th />          
         </tr>
 
@@ -91,6 +92,7 @@
         <tr>
           <td><%= link_to proposal.project.name, proposal.project %>
           <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(proposal.project, proposal) %></td>
+          <td><%=h proposal.status %>
           <td><% if can_edit_proposal?(proposal) %>
             <%= link_to 'Edit', edit_project_proposal_path(proposal.project, proposal) %> | 
             <%= link_to 'Delete', project_proposal_path(proposal.project, proposal), :confirm => 'Are you sure?', :method => :delete %>     

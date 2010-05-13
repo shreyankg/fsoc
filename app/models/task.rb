@@ -24,4 +24,5 @@ class Task < ActiveRecord::Base
   belongs_to :project
   belongs_to :proposal
   has_one :student, :through => :proposal
+  has_one :mentor, :through => :project
 end

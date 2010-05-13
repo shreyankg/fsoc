@@ -72,7 +72,13 @@
                 -
               <% end %>
             </td>
-            <td><%=h dash task.end_date %></td>
+            <td>
+              <% if task.student %>           
+                <%=h task.end_date.to_formatted_s(:long) %>
+              <% else %>
+                -
+              <% end %>            
+            </td>
             <td>
               <% if can_edit_task?(task) %>
                 <%= link_to 'Edit', edit_project_task_path(@project, task) %> | 
@@ -114,6 +120,7 @@
         <tr>
           <th>Student</th>
           <th>Proposal</th>
+          <th>Status</th>
           <th />
         </tr>
 
@@ -121,6 +128,7 @@
         <tr>
           <td><%= link_to_user proposal.student %>
           <td><%= link_to truncate(proposal.proposal_text, 45, '...'), project_proposal_path(@project, proposal) %></td>
+          <td><%=h proposal.status.capitalize %>
           <td>
             <% if can_edit_proposal?(proposal) %>
               <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
