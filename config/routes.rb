@@ -28,9 +28,11 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :projects
   map.resources :projects do |project| 
     project.resources :proposals 
-    project.resources :proposals, :member => { :allocate => :get, :allocated => :put }
+    project.resources :proposals, :member => { :allocate => :get, :allocated => :put, :reject => :get }
   end
-  map.resources :projects do |project| project.resources :tasks end
+  map.resources :projects do |project| 
+    project.resources :tasks, :member => { :unallocate => :get }
+  end
   #map.allocate_project_proposal '/projects/:project_id/proposals/:id/allocate', :controller => 'proposals', :action => 'allocate'
   #map.resources :tasks, :collection => { :allocated => :put }
   

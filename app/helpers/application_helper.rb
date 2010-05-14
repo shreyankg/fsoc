@@ -57,7 +57,7 @@ module ApplicationHelper
   end
   
   def verb(proposal)
-    if proposal.accepted
+    if proposal.status == 'accepted'
       'Allocate more tasks'
     else
       'Accept and allocate tasks'

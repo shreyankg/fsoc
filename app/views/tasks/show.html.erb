@@ -38,10 +38,12 @@
       <b>Task Author :</b>
       <%= link_to_user @task.author %>
     </p>
+    <% if @task.mentor %>
      <p>
       <b>Task Mentor :</b>
       <%= link_to_user @task.mentor %>
     </p>    
+    <% end %>
     <% if @task.student %>
     <p>
       <b>Student :</b>

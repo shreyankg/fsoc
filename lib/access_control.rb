@@ -43,20 +43,23 @@ module AccessControl
     
     #project specific
     def can_edit_project?(project)
-      logged_in? && (current_user == project.proposer || current_user == project.mentor || current_user.user_type == 'admin')
+      logged_in? && (current_user == project.proposer || \
+        current_user == project.mentor || current_user.user_type == 'admin')
     end
     
     def can_delete_project?(project)
-      logged_in? && ((current_user == project.proposer && !project.mentor) || current_user.user_type == 'admin')
+      logged_in? && ((current_user == project.proposer && !project.mentor) \
+        || current_user.user_type == 'admin')
     end
     
     #proposal specific
     def can_add_proposal?(project)
       proposals = Array.new
       if logged_in?
-        proposals = project.proposals.find(:all, :conditions => {:student_id => current_user.id})
+        proposals = project.proposals.find(:all, \
+          :conditions => {:student_id => current_user.id})
       end
-      student? && proposals.empty?
+      student? && proposals.empty? && !(current_user.project)
     end
     
     def can_view_proposal_list?(project)
@@ -64,11 +67,13 @@ module AccessControl
     end
         
     def can_edit_proposal?(proposal)
-      (student? && proposal.student == current_user && proposal.status == 'pending') || admin?
+      (student? && proposal.student == current_user && \
+        proposal.status == 'pending') || admin?
     end
 
     def can_view_proposal?(proposal)
-      (student? && proposal.student == current_user) || can_view_proposal_list?(proposal.project)
+      (student? && proposal.student == current_user) \
+        || can_view_proposal_list?(proposal.project)
     end
     
     def can_view_user_proposal_list?(user)
@@ -76,7 +81,9 @@ module AccessControl
     end
     
     def can_accept_proposal?(proposal)
-      mentor? && proposal.project.mentor == current_user && !proposal.project.unallocated_tasks.empty?
+      mentor? && proposal.project.mentor == current_user && \
+        !proposal.project.unallocated_tasks.empty? && \
+        (proposal.status == 'pending' || proposal.status == 'accepted')
     end
     
     #task specific
@@ -102,9 +109,11 @@ module AccessControl
       if base.respond_to? :helper_method
         base.send :helper_method, :mentor?, :student?, :admin?
         base.send :helper_method, :can_edit_project?, :can_delete_project?
-        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, :can_view_proposal_list?, :can_view_user_proposal_list?
+        base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, \
+          :can_view_proposal_list?, :can_view_user_proposal_list?
         base.send :helper_method, :can_accept_proposal?
-        base.send :helper_method, :can_add_task?, :can_edit_task?, :can_view_task_list?
+        base.send :helper_method, :can_add_task?, :can_edit_task?, \
+          :can_view_task_list?
       end
     end  
 end

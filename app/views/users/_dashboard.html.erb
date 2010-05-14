@@ -43,8 +43,9 @@
       </tr>
     <% end %>
   </table>
+<% else %>
+  <h3>Haven't proposed any projects</h3>
 <% end %>
-
 <% if mentor?(user) %>
   <br />
   <% if !user.project_mentorships.empty? %>

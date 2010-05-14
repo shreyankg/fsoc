@@ -138,7 +138,7 @@ class ProjectsController < ApplicationController
   
   def resign
     @project = Project.find(params[:id])
-    if mentor? && @project.mentor == current_user
+    if mentor? && @project.mentor == current_user && @project.students.empty?
       @project.mentor = nil
       if @project.save
         flash[:notice] = 'You are no longer mentoring this project.'

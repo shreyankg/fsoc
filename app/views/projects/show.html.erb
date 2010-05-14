@@ -38,7 +38,7 @@
  <b>Mentor:</b>
     <%= @project.mentor ? link_to_user(@project.mentor): 'Nobody' %>
     <% if mentor? %>
-       <%= link_to '(Resign as Mentor)', :action => 'resign', :id => @project.id if @project.mentor == current_user %>
+       <%= link_to '(Resign as Mentor)', :action => 'resign', :id => @project.id if (@project.mentor == current_user && @project.students.empty?)%>
        <%= link_to '(Volunteer as Mentor)', :action => 'volunteer', :id => @project.id if !@project.mentor %>
     <% end %>
 </p>
@@ -57,14 +57,21 @@
       <table id="hor-minimalist-a">
         <tr>
           <th>Task</th>
+        <% if @project.students.empty? %>
+          <th>Estimated time</th>
+        <% else %>        
           <th>Student</th>
           <th>Expected<br /> delivery date</th>
+        <% end %>
           <th />
         </tr>
 
         <% @tasks.each do |task| %>
           <tr>
             <td><%= link_to task.title, project_task_path(@project, task) %></td>
+          <% if @project.students.empty? %>
+            <td><%=h task.eta %> days</td>
+          <% else %>            
             <td>
               <% if task.student %>           
                 <%= link_to_user task.student %>
@@ -79,10 +86,15 @@
                 -
               <% end %>            
             </td>
+          <% end %>
             <td>
               <% if can_edit_task?(task) %>
-                <%= link_to 'Edit', edit_project_task_path(@project, task) %> | 
-                <%= link_to 'Delete', project_task_path(@project, task), :confirm => 'Are you sure?', :method => :delete %>
+                <%= link_to 'Edit', edit_project_task_path(@project, task) %> |
+                <% if task.student %>
+                  <%= link_to 'Unallocate', unallocate_project_task_path(@project, task), :confirm => 'Are you sure?' %>
+                <% else %>
+                  <%= link_to 'Delete', project_task_path(@project, task), :confirm => 'Are you sure?', :method => :delete %>
+                <% end %>
               <% end %>
             </td>
           </tr>
@@ -136,13 +148,20 @@
             <% end %>
             <% if can_accept_proposal?(proposal) %>
               <%= link_to verb(proposal), allocate_project_proposal_path(@project, proposal) %>
+              <% if proposal.status == 'pending' %>                
+                | <%= link_to 'Reject', reject_project_proposal_path(@project, proposal) %>
+              <% end %>
             <% end %>
           </td>           
         </tr>
       <% end %>
     </table>
   <% else %>
-    <h3>Empty proposals list</h3>
+    <% if (current_user.project) %>
+      <h3>You cannot submit proposals for this project </h3>
+    <% else %>
+      <h3>Empty proposals list</h3>
+    <% end %>
   <% end %>
 <% else %>
   <h3>You are not authorised to view the proposals list</h3>
