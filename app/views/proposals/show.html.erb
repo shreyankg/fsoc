@@ -33,7 +33,7 @@
     </p>
     <p>
       <b>Status :</b>
-      <%=h @proposal.status.capitalize %>
+      <%=h @proposal.status.humanize %>
     </p>
     <% if @proposal.status == 'accepted' %>
       <% if can_view_task_list?(@proposal.project) %>

@@ -103,7 +103,7 @@ class ProposalsController < ApplicationController
       if proposal == @proposal
         status = 'accepted'
       else
-        status = 'student busy'
+        status = 'student_busy'
       end
       proposal.update_attributes(:status => status)
     end

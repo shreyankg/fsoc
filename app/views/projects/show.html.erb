@@ -140,7 +140,7 @@
         <tr>
           <td><%= link_to_user proposal.student %>
           <td><%= link_to truncate(proposal.proposal_text, 45, '...'), project_proposal_path(@project, proposal) %></td>
-          <td><%=h proposal.status.capitalize %>
+          <td><%=h proposal.status.humanize %>
           <td>
             <% if can_edit_proposal?(proposal) %>
               <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
