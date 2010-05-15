@@ -39,8 +39,10 @@ class ProjectsController < ApplicationController
     if can_view_proposal_list?(@project)
       @proposals = @project.proposals
     end
-    @tasks = @project.tasks
-    respond_to do |format|
+    @tasks = @project.tasks    
+	@comments = @project.comments
+
+	respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @project }
     end

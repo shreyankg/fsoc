@@ -24,4 +24,5 @@ class Project < ActiveRecord::Base
   belongs_to :student, :class_name => "User", :foreign_key => "student_id"
   has_many :proposals
   has_many :tasks
+  has_many :comments
 end

@@ -40,6 +40,7 @@ class User < ActiveRecord::Base
   has_many :project_internships, :class_name => "Project", :foreign_key => 'student_id'
   has_many :task_authorships, :class_name => "Task", :foreign_key => 'author_id'
   has_many :task_ownerships, :class_name => "Task", :foreign_key => 'student_id'  
+  has_many :comment_authorships, :class_name => "Comment", :foreign_key => 'author_id'
   has_many :proposals, :foreign_key => 'student_id'
 
   # HACK HACK HACK -- how to do attr_accessible from here?
