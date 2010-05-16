@@ -21,8 +21,12 @@ class Project < ActiveRecord::Base
   
   belongs_to :proposer, :class_name => "User", :foreign_key => "proposer_id"
   belongs_to :mentor, :class_name => "User", :foreign_key => "mentor_id"
-  belongs_to :student, :class_name => "User", :foreign_key => "student_id"
+
   has_many :proposals
+  has_many :accepted_proposals, :class_name => 'Proposal', :conditions => { :status => 'accepted' }
+  has_many :students, :through => :accepted_proposals
+  
   has_many :tasks
   has_many :comments
-end
+  has_many :unallocated_tasks, :class_name => 'Task', :conditions => { :proposal_id => nil }
+ end

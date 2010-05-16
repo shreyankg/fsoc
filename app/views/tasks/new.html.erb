@@ -24,7 +24,6 @@
 	<div class="entry">
 <% form_for @task, :url => project_tasks_url do |f| %>
   <%= f.error_messages %>
-    <%= f.hidden_field :student_id, :value => current_user.id %>
     <%= f.hidden_field :project_id, :value => @task.project.id %>
     <p>
       <b><%= f.label :title %></b><br />

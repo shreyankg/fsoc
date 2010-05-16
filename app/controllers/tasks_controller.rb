@@ -81,5 +81,15 @@ class TasksController < ApplicationController
     flash[:notice] = 'Task deleted!'
     redirect_to project_path(@task.project)
   end
+  
+  def unallocate
+    @task = Task.find(params[:id])  
+    if !can_edit_task?(@task)
+      flash[:notice] = 'Cannot unallocate task!'  
+    end
+    @task.update_attributes(:end_date => nil, :proposal => nil)
+    flash[:notice] = 'Successfully unallocated task!'
+    redirect_to @task.project 
+  end
 
 end

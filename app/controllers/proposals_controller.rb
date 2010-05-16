@@ -32,11 +32,7 @@ class ProposalsController < ApplicationController
       @proposal = Proposal.new
       @proposal.project = project
     else
-      if student?
-        flash[:notice] = 'You are not allowed to submit more than one proposal.'
-      else
-        flash[:notice] = 'You are not allowed to submit proposals.'
-      end
+      flash[:notice] = 'You are not authorised to add a/another proposal.'
       redirect_to(project)
     end
   end
@@ -84,4 +80,42 @@ class ProposalsController < ApplicationController
     flash[:notice] = 'Project proposal deleted!'
     redirect_to project_path(@proposal.project)
   end
+  
+  def allocate
+    @proposal = Proposal.find(params[:id])  
+    if !can_accept_proposal?(@proposal)
+      flash[:notice] = 'Cannot allocate tasks!'
+      redirect_to @proposal.project   
+    end
+    @tasks = @proposal.project.unallocated_tasks
+  end
+  
+  def allocated
+    @tasks = Task.find(params[:task_ids])
+    @proposal = Proposal.find(params[:id])
+    @student = @proposal.student
+    @tasks.each do |task|
+      end_date = params["task_#{task.id}".to_sym]
+      end_date = Date.civil(end_date[:year].to_i, end_date[:month].to_i, end_date[:day].to_i)
+      task.update_attributes(:end_date => end_date, :proposal => @proposal)
+    end
+    @student.proposals.each do |proposal|
+      if proposal == @proposal
+        status = 'accepted'
+      else
+        status = 'student_busy'
+      end
+      proposal.update_attributes(:status => status)
+    end
+        
+    flash[:notice] = 'Project tasks successfully allocated.'
+    redirect_to @proposal.project
+  end
+  
+  def reject
+    @proposal = Proposal.find(params[:id])  
+    @proposal.update_attributes(:status => 'rejected')
+    flash[:notice] = 'Proposal sucessfully rejected.'
+    redirect_to @proposal.project
+  end  
 end

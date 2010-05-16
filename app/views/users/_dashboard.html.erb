@@ -43,8 +43,9 @@
       </tr>
     <% end %>
   </table>
+<% else %>
+  <h3>Haven't proposed any projects</h3>
 <% end %>
-
 <% if mentor?(user) %>
   <br />
   <% if !user.project_mentorships.empty? %>
@@ -84,6 +85,7 @@
         <tr>
           <th>Project</th>
           <th>Proposal</th>
+          <th>Status</th>
           <th />          
         </tr>
 
@@ -91,6 +93,7 @@
         <tr>
           <td><%= link_to proposal.project.name, proposal.project %>
           <td><%= link_to truncate(proposal.proposal_text, 50, '...'), project_proposal_path(proposal.project, proposal) %></td>
+          <td><%=h proposal.status %>
           <td><% if can_edit_proposal?(proposal) %>
             <%= link_to 'Edit', edit_project_proposal_path(proposal.project, proposal) %> | 
             <%= link_to 'Delete', project_proposal_path(proposal.project, proposal), :confirm => 'Are you sure?', :method => :delete %>     
@@ -105,30 +108,26 @@
   
 <% if student?(user) %>
   <br />
-  <% if !user.project_internships.empty? %>
+  <% if user.project %>
     <h3><%=h user.login %> is student for project</h3>
 		  <table id="hor-minimalist-a">
         <tr>
           <th>Name</th>
-          <th>Proposed by</th>
           <th>Mentor</th>        
         </tr>
 
-      <% user.project_mentorships.each do |project| %>
         <tr>
-          <td><%= link_to project.name, project %>
-          <td><%= link_to_user project.proposer %></td>
-          <td><%= project.mentor ? link_to_user(project.mentor): "Nobody" %></td>        
+          <td><%= link_to user.project.name, user.project %>
+          <td><%= user.project.mentor ? link_to_user(user.project.mentor): "Nobody" %></td>        
           <td>
-          <% if can_edit_project?(project) %>
-            <%= link_to 'Edit', edit_project_path(project) %>
+          <% if can_edit_project?(user.project) %>
+            <%= link_to 'Edit', edit_project_path(user.project) %>
           <% end %>
-          <%= ' | ' if can_edit_project?(project) && can_delete_project?(project) %>
-          <% if can_delete_project?(project) %>
-          <%= link_to 'Delete', project, :confirm => 'Are you sure?', :method => :delete %></td>
+          <%= ' | ' if can_edit_project?(user.project) && can_delete_project?(user.project) %>
+          <% if can_delete_project?(user.project) %>
+          <%= link_to 'Delete', user.project, :confirm => 'Are you sure?', :method => :delete %></td>
           <% end %>
         </tr>
-      <% end %>
     </table>
   <% else %>
     <h3>Not student for any projects</h3>
