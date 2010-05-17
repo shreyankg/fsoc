@@ -102,6 +102,12 @@ class ProposalsController < ApplicationController
     @student.proposals.each do |proposal|
       if proposal == @proposal
         status = 'accepted'
+        @subject = "Fedora Summer Coding"
+        @message = "Congratulations! You have been accepted for the project #{@proposal.project.name}!"
+        
+        #Sends a mail to the student on acceptance.
+        #Remove if not required
+        Mail.deliver_message(@student.email, @subject, @message)
       else
         status = 'student_busy'
       end
@@ -115,6 +121,15 @@ class ProposalsController < ApplicationController
   def reject
     @proposal = Proposal.find(params[:id])  
     @proposal.update_attributes(:status => 'rejected')
+    
+    @student = @proposal.student
+    @subject = "Fedora Summer Coding"
+    @message = "We are sorry, we did not accept yor proposal for the project #{@proposal.project.name}!"
+        
+    #Sends a mail to the student on acceptance.
+    #Remove if not required
+    Mail.deliver_message(@student.email, @subject, @message)
+    
     flash[:notice] = 'Proposal sucessfully rejected.'
     redirect_to @proposal.project
   end  

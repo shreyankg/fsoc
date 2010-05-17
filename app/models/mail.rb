@@ -16,8 +16,12 @@
 #++
 
 
-class Comment < ActiveRecord::Base
-	validates_presence_of :content
-	belongs_to :author, :class_name => "User", :foreign_key => "author_id"
-	belongs_to :project
+
+class Mail < ActionMailer::Base
+  def message(recipient, subj, message)
+    recipients recipient
+    from       "fsocmailer@gmail.com"
+    subject    subj
+    body       :message => message
+  end
 end

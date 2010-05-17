@@ -38,4 +38,26 @@ Rails::Initializer.run do |config|
   # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
   # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}')]
   # config.i18n.default_locale = :de
+  
+  #Settings for the mailer
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  
+  config.action_mailer.smtp_settings = {
+    #Remove this line if TLS is not being used
+    :enable_starttls_auto => true,
+    :address  => "smtp.gmail.com",
+    
+    #Set port appropriately
+    :port     => 587,
+    
+    #Set domain appropriately
+    :domain   => 'gmail.com',
+    :authentication => :plain,
+    
+    #Set authentication credentials appropriately
+    :user_name      => "fsocmailer@gmail.com",
+    :password       => "randompassword"
+  }
+
 end
