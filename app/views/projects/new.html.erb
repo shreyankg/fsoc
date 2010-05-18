@@ -18,38 +18,42 @@
 %>
 
 <div class="post">
-	<h2 class="title">New project</h2>
-	<p class="meta"><span class="date">&nbsp;</span></p>
-	<div style="clear: both;">&nbsp;</div>
-	<div class="entry">
-	<% form_for(@project) do |f| %>
-  <%= f.error_messages %>
+  <h2 class="title">New project</h2>
+  <p class="meta"><span class="date">&nbsp;</span></p>
+  <div style="clear: both;">&nbsp;</div>
+  <div class="entry">
+  
+  <% form_for(@project) do |f| %>
+    <%= f.error_messages %>
 
-  <p>
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </p>
-  <p>
-    <%= f.label :definition %><br />
-    <%= f.text_area :definition %>
-  </p>
-  <p>
-    <%= f.label :urls, "URL's (separated by commas)" %><br />
-    <%= f.text_field :urls %>
-  </p>
-  <p>
-    <%= f.label :eta, "Estimated Time (in days)" %><br />
-    <%= f.text_field :eta %>
-  </p>
-  <p>
-    <% if current_user.user_type == 'mentor' %>
-    <%= check_box_tag 'mentor' %> I want to mentor this project.
-    <% end %>
-  </p>
-  <p>
-    <%= f.submit 'Create' %>
-  </p>
-<% end %>
-		<p class="links"><%= link_to 'Back', projects_path %></p>	
-	</div>
+    <p>
+      <%= f.label :name %><br />
+      <%= f.text_field :name %>
+    </p>
+    
+	<p>
+      <%= f.label :definition %><br />
+      <%= f.text_area :definition %>
+    </p>
+    
+	<p>
+      <%= f.label :urls, "URL's (separated by commas)" %><br />
+      <%= f.text_field :urls %>
+    </p>
+    
+	<p>
+      <%= f.label :eta, "Estimated Time (in days)" %><br />
+      <%= f.text_field :eta %>
+    </p>
+    <p>
+      <% if current_user.user_type == 'mentor' %>
+        <%= check_box_tag 'mentor' %> I want to mentor this project.
+      <% end %>
+    </p>
+    <p>
+      <%= f.submit 'Create' %>
+    </p>
+  <% end %>
+  <p class="links"><%= link_to 'Back', projects_path %></p>	
+</div>
 </div>

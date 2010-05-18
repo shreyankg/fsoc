@@ -18,18 +18,11 @@
 class CommentsController < ApplicationController
   before_filter :login_required, :except => 'show'
   
-  def index
-    
-	project = Project.find(params[:project_id])
-	@comments = project.comments
+  def index  
+    @project = Project.find(params[:project_id])
+	@comments = @project.comments
 	@comment = Comment.new
-	@comment.project = project
-
-  end
-
-  def show
-    @comment = Comment.find(params[:id])
-	@project = Project.find(params[:project_id])
+	@comment.project = @project
   end
 
   def new
@@ -40,31 +33,39 @@ class CommentsController < ApplicationController
 
   def edit
     @comment = Comment.find(params[:id])
+	if !can_edit_comment?(@comment)
+	  flash[:notice] = 'You are not authorised to edit this comment.'
+      redirect_to :action => 'index'
+	end
+  end
+  
+  def update
+    @task = Comment.find(params[:id])
+	if @task.update_attributes(params[:comment])
+	  flash[:notice] = 'Comment was successfully updated.'
+      redirect_to :action => 'index'
+    else
+      flash[:notice] = 'Could not update comment'        
+      render :action => "edit"
+    end
   end
 
   def create
     @comment = Comment.new(params[:comment])
     @comment.author = current_user
-      if @comment.save
-        flash[:notice] = 'Comment was successfully created.'
-		redirect_to :action => 'index', :project_id => params[:project_id]
-      else
-		 flash[:notice] = 'Could not create new comment'    
-		 redirect_to :action => 'index', :id => @comment.id
-      end
-    
-  end
-
-  def update
-    @comment = Comment.find(params[:id])
-	#Finish this if comments can be updated. Does not seem necessary
+	if @comment.save
+      flash[:notice] = 'Comment was successfully created.'
+	  redirect_to :action => 'index', :project_id => params[:project_id]
+    else
+	  flash[:notice] = 'Could not create new comment'    
+	  redirect_to :action => 'index', :id => @comment.id
+    end
   end
   
   def destroy
     #Deleting a comment, actually leaves a message behind
-	#'Deleted by admin'
     @comment = Comment.find(params[:id])
-	@comment.content = "This message has been deleted by the admin"
+	@comment.content = "This message has been deleted."
     if @comment.update_attributes(params[:task])
       flash[:notice] = 'Comment was successfully deleted.'
       redirect_to :action => 'index', :project_id => params[:project_id]

@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20100515161621) do
     t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "author_id"
+    t.integer  "user_id"
   end
 
   create_table "projects", :force => true do |t|

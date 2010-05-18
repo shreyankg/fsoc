@@ -18,41 +18,50 @@
 %>
 
 <div class="post">
-	<h2 class="title">Comments on <%=h @comment.project.name %></h2>
-	<p class="meta"><span class="date">&nbsp;</span></p>
-	<div style="clear: both;">&nbsp;</div>
-	<div class="entry">
+<h2 class="title">Comments on <%=h @comment.project.name %></h2>
+<p class="meta"><span class="date">&nbsp;</span></p>
+<div style="clear: both;">&nbsp;</div>
+<div class="entry">
 
-<table id="hor-minimalist-a">
-   <% @project = Project.find(params[:project_id]) %>
-   <% if @comments.empty?  %>
-   <b> No comments have been posted yet. </b>
+<table id = "hor-minimalist-a">   
+  <% if @comments.empty?  %>
+  <b> No comments have been posted yet. </b>
    
-   <% else %>
-	 <tr>
-		<% @comments.each do |comment| %>
- 		<tr>
- 		<% @user = User.find(comment.author_id) %>
-    		<b><%=link_to_user @user%></b> [<%= comment.created_at %>] 
-    		<% if can_delete_comment? %>
-    			<%= link_to 'Delete', project_comment_path(@project, comment), :confirm => 'Are you sure?', :method => :delete %>
-    		<% end %>
-    		
-    		<br> 
-    		
-    		<%=h comment.content %>  
-    		<hr>
-    		</tr>
-		<% end %>    
-		
+  <% else %>	 
+  <% @comments.each do |comment| %>
+    <tr>
+	  <th>
+        <% @user = User.find(comment.user_id) %>
+        <b><%=link_to_user @user%></b> <small>Posted On: [<%= (comment.created_at).inspect %>] </small>
+	  </th>
+    </tr>
+	<tr>
+	  <td>	
+        <%=h comment.content %> 
+		<br>
+		<small>
+		  <%if can_edit_comment?(comment) %>
+		  <%= link_to 'Edit', edit_project_comment_path(@project,comment) %> |
+			
+		  <% end %>
+			<% if can_delete_comment?(comment) %>
+    			<%= link_to 'Delete', project_comment_path(@project, comment), :confirm => 'Are you sure?', :method => :delete %> |
+    		<% end %> 
+			
+			Last Updated: [<%= (comment.updated_at).inspect %>]
+		</small>
+    	<br><br>
+    	
+	</td>
   	</tr>
-   <% end %>
+	<% end %>    
+  <% end %>
 </table>
 
-<br />
+<br/>
 <p class="links">
-<%= link_to 'New comment', new_project_comment_path(@comment.project) %> | 
-<%= link_to 'Back to Project', project_path(@comment.project) %>
+  <%= link_to 'New comment', new_project_comment_path(@comment.project) %> | 
+  <%= link_to 'Back to Project', project_path(@comment.project) %>
 </p>
 </div>
 </div>

@@ -105,9 +105,14 @@ module AccessControl
     end
 		
 	#comment specific
-	def can_delete_comment?
-		admin?
+	def can_delete_comment?(comment)
+		comment.user == current_user || admin?
 	end
+	
+	def can_edit_comment?(comment)
+		comment.user == current_user
+	end
+	
     #Make available as ActionView helper methods.
     def self.included(base)
       if base.respond_to? :helper_method
@@ -117,7 +122,7 @@ module AccessControl
           :can_view_proposal_list?, :can_view_user_proposal_list?
         base.send :helper_method, :can_accept_proposal?
         base.send :helper_method, :can_add_task?, :can_edit_task?, \
-          :can_view_task_list?, :can_delete_comment?
+          :can_view_task_list?, :can_delete_comment?, :can_edit_comment?
       end
     end  
 end

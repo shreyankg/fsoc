@@ -23,8 +23,8 @@ class ProjectsController < ApplicationController
     @projects = Project.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @projects }
+	  format.html # index.html.erb
+	  format.xml  { render :xml => @projects }
     end
   end
 
@@ -40,7 +40,6 @@ class ProjectsController < ApplicationController
       @proposals = @project.proposals
     end
     @tasks = @project.tasks    
-	@comments = @project.comments
 
 	respond_to do |format|
       format.html # show.html.erb
