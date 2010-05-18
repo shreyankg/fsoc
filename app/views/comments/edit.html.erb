@@ -24,23 +24,23 @@
 <div class="entry">
 	
 	
-  <% form_for @comment, :url => project_comment_path do |f|  %>
-    <%= f.error_messages %>
+<% form_for @comment, :url => project_comment_path do |f|  %>
+  <%= f.error_messages %>
   
-    <%= f.hidden_field :user_id, :value => current_user.id %>
-    <%= f.hidden_field :project_id, :value => @comment.project.id %>
-    <p>
-      <%= f.label :content %><br />
-      <%= f.text_area :content %>
-    </p>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :project_id, :value => @comment.project.id %>
+  <p>
+    <%= f.label :content %><br />
+    <%= f.text_area :content %>
+  </p>
   
-    <p>
-      <%= f.submit 'Update' %>
-    </p>
-  <% end %>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
 
 	
-  <br/>
+<br/>
   <p class="links">
     <%= link_to 'Back to Project', project_path(@comment.project) %>
   </p>

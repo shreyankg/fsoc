@@ -24,13 +24,13 @@
 <div class="entry">
 	
 	
-  <% form_for @comment, :url => project_comments_url do |f|  %>
-    <%= f.error_messages %>
+<% form_for @comment, :url => project_comments_url do |f|  %>
+  <%= f.error_messages %>
   
-    <%= f.hidden_field :user_id, :value => current_user.id %>
-    <%= f.hidden_field :project_id, :value => @comment.project.id %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :project_id, :value => @comment.project.id %>
   <p>
-    <%= f.label :content %><br />
+    <%= f.label :content %><br/>
     <%= f.text_area :content %>
   </p>
   
