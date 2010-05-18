@@ -42,17 +42,17 @@ class CommentsController < ApplicationController
   def update
     @task = Comment.find(params[:id])
     if @task.update_attributes(params[:comment])
-      flash[:notice] = 'Comment was successfully updated.'
+      flash[:notice] = 'Comment was successfully edited.'
       redirect_to :action => 'index'
     else
-      flash[:notice] = 'Could not update comment'        
+      flash[:notice] = 'Could not edit comment'        
       render :action => "edit"
     end
   end
 
   def create
     @comment = Comment.new(params[:comment])
-    @comment.author = current_user
+    @comment.user = current_user
     if @comment.save
       flash[:notice] = 'Comment was successfully created.'
       redirect_to :action => 'index', :project_id => params[:project_id]
