@@ -21,8 +21,6 @@ class CommentsController < ApplicationController
   def index  
     @project = Project.find(params[:project_id])
     @comments = @project.comments
-    @comment = Comment.new
-    @comment.project = @project
   end
 
   def new
@@ -35,7 +33,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if !can_edit_comment?(@comment)
       flash[:notice] = 'You are not authorised to edit this comment.'
-      redirect_to :action => 'index'
+      redirect_to project_comments_url
       end
   end
   
@@ -43,7 +41,7 @@ class CommentsController < ApplicationController
     @task = Comment.find(params[:id])
     if @task.update_attributes(params[:comment])
       flash[:notice] = 'Comment was successfully edited.'
-      redirect_to :action => 'index'
+      redirect_to project_comments_url
     else
       flash[:notice] = 'Could not edit comment'        
       render :action => "edit"
@@ -55,23 +53,21 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     if @comment.save
       flash[:notice] = 'Comment was successfully created.'
-      redirect_to :action => 'index', :project_id => params[:project_id]
+      redirect_to project_comments_url
     else
       flash[:notice] = 'Could not create new comment'    
-      redirect_to :action => 'index', :id => @comment.id
+      redirect_to project_comments_url
     end
   end
   
   def destroy
-    #Deleting a comment, actually leaves a message behind
     @comment = Comment.find(params[:id])
-    @comment.content = "This message has been deleted."
-    if @comment.update_attributes(params[:task])
-      flash[:notice] = 'Comment was successfully deleted.'
-      redirect_to :action => 'index', :project_id => params[:project_id]
-    else
-      flash[:notice] = 'Could not delete comment'        
-      redirect_to :action => 'index', :id => @comment.id
+    if !can_delete_comment?(@comment)
+      flash[:notice] = 'You are not authorised to delete this comment.'
+      redirect_to project_comments_url
     end
+    @comment.destroy
+    flash[:notice] = 'Comment was successfully deleted.'
+    redirect_to project_comments_url
   end
 end
