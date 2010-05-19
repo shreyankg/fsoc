@@ -52,7 +52,7 @@
             <td><%= link_to task.title, project_task_path(@proposal.project, task) %></td>
             <td>
               <% if task.student %>           
-                <%=h task.end_date.to_formatted_s(:long) %>
+                <%=h task.due_date.to_formatted_s(:long) %>
               <% else %>
                 -
               <% end %>            

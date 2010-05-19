@@ -38,8 +38,8 @@
     </p>
     <% if @task.student %>
     <p>
-      <b><%= f.label :end_date, 'Expected delivery date' %></b><br />
-      <%= date_select :task, :end_date %> 
+      <b><%= f.label :due_date %></b><br />
+      <%= date_select :task, :due_date %> 
     </p>
     <% end %>  
     <p>

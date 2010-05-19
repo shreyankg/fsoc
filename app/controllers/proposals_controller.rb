@@ -95,9 +95,9 @@ class ProposalsController < ApplicationController
     @proposal = Proposal.find(params[:id])
     @student = @proposal.student
     @tasks.each do |task|
-      end_date = params["task_#{task.id}".to_sym]
-      end_date = Date.civil(end_date[:year].to_i, end_date[:month].to_i, end_date[:day].to_i)
-      task.update_attributes(:end_date => end_date, :proposal => @proposal)
+      due_date = params["task_#{task.id}".to_sym]
+      due_date = Date.civil(due_date[:year].to_i, due_date[:month].to_i, due_date[:day].to_i)
+      task.update_attributes(:due_date => due_date, :proposal => @proposal)
     end
     @student.proposals.each do |proposal|
       if proposal == @proposal

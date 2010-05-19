@@ -87,7 +87,7 @@ class TasksController < ApplicationController
     if !can_edit_task?(@task)
       flash[:notice] = 'Cannot unallocate task!'  
     end
-    @task.update_attributes(:end_date => nil, :proposal => nil)
+    @task.update_attributes(:due_date => nil, :proposal => nil)
     flash[:notice] = 'Successfully unallocated task!'
     redirect_to @task.project 
   end

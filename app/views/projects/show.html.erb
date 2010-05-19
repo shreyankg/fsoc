@@ -61,7 +61,7 @@
           <th>Estimated time</th>
         <% else %>        
           <th>Student</th>
-          <th>Expected<br /> delivery date</th>
+          <th>Due date</th>
         <% end %>
           <th />
         </tr>
@@ -81,7 +81,7 @@
             </td>
             <td>
               <% if task.student %>           
-                <%=h task.end_date.to_formatted_s(:long) %>
+                <%=h task.due_date.to_formatted_s(:long) %>
               <% else %>
                 -
               <% end %>            
