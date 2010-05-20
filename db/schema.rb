@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(:version => 20100519145341) do
     t.integer  "eta"
     t.integer  "proposal_id"
     t.date     "signoff_date"
-    t.string   "status"
+    t.string   "status",       :default => "new"
   end
 
   create_table "users", :force => true do |t|

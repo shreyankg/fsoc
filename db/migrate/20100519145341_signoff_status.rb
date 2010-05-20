@@ -1,7 +1,7 @@
 class SignoffStatus < ActiveRecord::Migration
   def self.up
     add_column :tasks, :signoff_date, :date
-    add_column :tasks, :status, :string
+    add_column :tasks, :status, :string, :default => "new"
     add_column :projects, :signoff_date, :date
 
   end
