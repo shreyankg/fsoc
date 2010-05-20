@@ -16,6 +16,8 @@
 #++
 
 ActionController::Routing::Routes.draw do |map|
+  
+
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
@@ -27,6 +29,10 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :projects
   map.resources :projects do |project| 
+	project.resources :comments 
+  end
+  
+  map.resources :projects do |project| 
     project.resources :proposals 
     project.resources :proposals, :member => { :allocate => :get, :allocated => :put, :reject => :get }
   end
@@ -35,6 +41,7 @@ ActionController::Routing::Routes.draw do |map|
   end
   #map.allocate_project_proposal '/projects/:project_id/proposals/:id/allocate', :controller => 'proposals', :action => 'allocate'
   #map.resources :tasks, :collection => { :allocated => :put }
+
   
   # The priority is based upon order of creation: first created -> highest priority.
 

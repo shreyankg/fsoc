@@ -1,6 +1,5 @@
-<%
 #--
-#   Copyright (C) 2010 Shreyank Gupta <sgupta@REDHAT.COM>
+#   Copyright (C) 2010 Gaurav Menghani <gaurav.menghani@gmail.com>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as published by
@@ -15,33 +14,14 @@
 #   You should have received a copy of the GNU Affero General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #++
-%>
 
-<li
-  <%= highlighted if highlight == "dashboard" -%>
-><a href="/">
-<% if logged_in? %>
-  Dashboard
-<% else %>
-  Welcome
-<% end %>
-  </a></li>
 
-<li
-  <%= highlighted if highlight == "projects" || highlight == "proposals" || highlight == "tasks" || highlight == "comments"-%>
-><a href="/projects">Projects</a></li>
 
-<li
-  <%= highlighted if highlight == "users" -%>
-><a href="/users">Users</a></li>
-
-<% if logged_in? %>
-<li
-  <%= highlighted if highlight == "calender" -%>
-><a href="/calender">Calender</a></li>
-<% end %>
-
-<li
-  <%= highlighted if highlight == "about" -%>
-><a href="/about">About FSoC</a></li>
-
+class Mail < ActionMailer::Base
+  def message(recipient, subj, message)
+    recipients recipient
+    from       "fsocmailer@gmail.com"
+    subject    subj
+    body       :message => message
+  end
+end

@@ -118,6 +118,7 @@
 	<% if can_add_proposal?(@project) %>
 	  <%= link_to 'Write a proposal', new_project_proposal_path(@project) %> |
 	<% end %>		
+    <%= link_to 'Discuss', project_comments_path(@project) %> |
     <%= link_to 'Back to projects', projects_path %>
   </p>
 

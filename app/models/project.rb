@@ -27,6 +27,6 @@ class Project < ActiveRecord::Base
   has_many :students, :through => :accepted_proposals
   
   has_many :tasks
+  has_many :comments
   has_many :unallocated_tasks, :class_name => 'Task', :conditions => { :proposal_id => nil }
-  
-end
+ end

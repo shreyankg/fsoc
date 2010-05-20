@@ -1,0 +1,51 @@
+<%
+#--
+#   Copyright (C) 2010 Gaurav Menghani <gaurav.menghani@gmail.com>
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU Affero General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU Affero General Public License for more details.
+#
+#   You should have received a copy of the GNU Affero General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#++
+%>
+
+<div class="post">
+<h2 class="title">New Comment for <%=h @comment.project.name %></h2>
+<p class="meta"><span class="date">&nbsp;</span></p>
+<div style="clear: both;">&nbsp;</div>
+<div class="entry">
+	
+	
+<% form_for @comment, :url => project_comments_url do |f|  %>
+  <%= f.error_messages %>
+  
+  <%= f.hidden_field :user_id, :value => current_user.id %>
+  <%= f.hidden_field :project_id, :value => @comment.project.id %>
+  <p>
+    <%= f.label :content %><br/>
+    <%= f.text_area :content %>
+  </p>
+  
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+	
+<br/>
+<p class="links">
+	<%= link_to 'Back to Discuss', project_comments_path(@comment.project) %> |
+	<%= link_to 'Back to Project', project_path(@comment.project) %>
+</p>
+</div>
+</div>
+
+
