@@ -16,7 +16,7 @@
 #++
 
 class CommentsController < ApplicationController
-  before_filter :login_required, :except => 'show'
+  before_filter :login_required, :except => 'index'
   
   def index  
     @project = Project.find(params[:project_id])

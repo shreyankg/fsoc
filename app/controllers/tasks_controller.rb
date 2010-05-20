@@ -84,11 +84,45 @@ class TasksController < ApplicationController
   
   def unallocate
     @task = Task.find(params[:id])  
-    if !can_edit_task?(@task)
+    if can_edit_task?(@task)
+      @task.update_attributes(:due_date => nil, :proposal => nil)
+      flash[:notice] = 'Successfully unallocated task!'
+    else    
       flash[:notice] = 'Cannot unallocate task!'  
     end
-    @task.update_attributes(:due_date => nil, :proposal => nil)
-    flash[:notice] = 'Successfully unallocated task!'
+    redirect_to @task.project
+  end
+  
+  def open
+    @task = Task.find(params[:id])  
+    if student_for_task?(@task)
+      @task.update_attributes(:start_date => Date.today, :status => 'open')
+      flash[:notice] = 'Successfully opened task!'    
+    else
+      flash[:notice] = 'Cannot open task!'  
+    end
+    redirect_to @task.project 
+  end
+
+  def resolve
+    @task = Task.find(params[:id])  
+    if student_for_task?(@task)
+      @task.update_attributes(:signoff_date => Date.today, :status => 'resolved')
+      flash[:notice] = 'Successfully resolved task!'
+    else
+      flash[:notice] = 'Cannot resolve task!'  
+    end
+    redirect_to @task.project 
+  end
+
+  def signoff
+    @task = Task.find(params[:id])  
+    if can_edit_task?(@task)
+      @task.update_attributes(:status => 'signed_off')
+      flash[:notice] = 'Successfully signed-off task!'
+    else
+      flash[:notice] = 'Cannot signoff task!'  
+    end
     redirect_to @task.project 
   end
 

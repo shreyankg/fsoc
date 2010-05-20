@@ -31,29 +31,25 @@
       <% @comments.each do |comment| %>
         <tr>
 	  <th>
-            <% @user = comment.user %>
-            <b><%=link_to_user @user%></b> 
-            <small>
-              Last edited <%= distance_of_time_in_words(comment.updated_at, Time.now, true)%> back
+      <% @user = comment.user %>
+      <b><%=link_to_user @user%></b> 
+      <small>
+        Last edited <%= distance_of_time_in_words(comment.updated_at, Time.now, true)%> back
 	  </th>
-        </tr>
+      </tr>
 	<tr>
 	  <td>	
-            <%=h comment.content %> 
+        <%=h comment.content %> 
 	    <br>
 	    <small>
-	      <%if can_edit_comment?(comment) %>
-	        <%= link_to 'Edit', edit_project_comment_path(@project,comment) %> |	
-	      <% end %>
-			  
-              <% if can_delete_comment?(comment) %>
-    	        <%= link_to 'Delete', project_comment_path(@project, comment), :confirm => 'Are you sure?', :method => :delete %> 
-    	      <% end %> 
-			
-	      
-	    </small>
-            
-     	
+      <%if can_edit_comment?(comment) %>
+        <%= link_to 'Edit', edit_project_comment_path(@project,comment) %> |	
+      <% end %>
+		  
+        <% if can_delete_comment?(comment) %>
+        <%= link_to 'Delete', project_comment_path(@project, comment), :confirm => 'Are you sure?', :method => :delete %> 
+      <% end %>
+	    </small>     	
 	  </td>
         </tr>
       <% end %>    
@@ -61,7 +57,9 @@
   </table>
   <br/>
   <p class="links">
-    <%= link_to 'New comment', new_project_comment_path(@project) %> | 
+    <%if logged_in? %>
+      <%= link_to 'New comment', new_project_comment_path(@project) %> | 
+    <% end %> 
     <%= link_to 'Back to Project', project_path(@project) %>
   </p>
   </div>

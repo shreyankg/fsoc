@@ -27,20 +27,18 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :session
 
 
-  map.resources :projects
+  map.resources :projects, :member => { :volunteer => :get, :resign => :get, :signoff => :get }
   map.resources :projects do |project| 
-	project.resources :comments 
+	  project.resources :comments 
   end
   
   map.resources :projects do |project| 
     project.resources :proposals 
-    project.resources :proposals, :member => { :allocate => :get, :allocated => :put, :reject => :get }
+    project.resources :proposals, :member => { :allocate => :get, :allocated => :put, :reject => :get, :signoff => :get }
   end
   map.resources :projects do |project| 
-    project.resources :tasks, :member => { :unallocate => :get }
+    project.resources :tasks, :member => { :unallocate => :get, :open => :get, :resolve => :get, :signoff => :get }
   end
-  #map.allocate_project_proposal '/projects/:project_id/proposals/:id/allocate', :controller => 'proposals', :action => 'allocate'
-  #map.resources :tasks, :collection => { :allocated => :put }
 
   
   # The priority is based upon order of creation: first created -> highest priority.

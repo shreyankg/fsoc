@@ -119,18 +119,33 @@ class ProposalsController < ApplicationController
   end
   
   def reject
-    @proposal = Proposal.find(params[:id])  
-    @proposal.update_attributes(:status => 'rejected')
-    
-    @student = @proposal.student
-    @subject = "Fedora Summer Coding"
-    @message = "We are sorry, we did not accept yor proposal for the project #{@proposal.project.name}!"
-        
-    #Sends a mail to the student on acceptance.
-    #Remove if not required
-    Mail.deliver_message(@student.email, @subject, @message)
-    
-    flash[:notice] = 'Proposal sucessfully rejected.'
+    @proposal = Proposal.find(params[:id])
+    if can_accept_proposal?(@proposal) && @proposal.status == 'pending'
+      @proposal.update_attributes(:status => 'rejected')
+      
+      @student = @proposal.student
+      @subject = "Fedora Summer Coding"
+      @message = "We are sorry, we did not accept yor proposal for the project #{@proposal.project.name}!"
+          
+      #Sends a mail to the student on acceptance.
+      #Remove if not required
+      Mail.deliver_message(@student.email, @subject, @message)
+      
+      flash[:notice] = 'Proposal sucessfully rejected.'
+    else
+      flash[:notice] = 'Could not reject proposal.'
+    end      
     redirect_to @proposal.project
-  end  
+  end 
+  
+  def signoff
+    @proposal = Proposal.find(params[:id])  
+    if can_signoff_proposal?(@proposal)
+      @proposal.update_attributes(:status => 'signed_off')
+      flash[:notice] = 'Successfully signed-off proposal!'
+    else
+      flash[:notice] = 'Cannot signoff proposal!'  
+    end
+    redirect_to @proposal.project 
+  end
 end

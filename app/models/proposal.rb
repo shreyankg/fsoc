@@ -22,4 +22,5 @@ class Proposal < ActiveRecord::Base
   belongs_to :student, :class_name => "User", :foreign_key => "student_id"
   
   has_many :tasks
+  has_many :incomplete_tasks, :class_name => 'Task', :conditions => [ "status != ?", 'signed_off' ]
 end

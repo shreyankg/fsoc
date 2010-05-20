@@ -86,6 +86,11 @@ module AccessControl
         (proposal.status == 'pending' || proposal.status == 'accepted')
     end
     
+    def can_signoff_proposal?(proposal)
+      mentor? && proposal.project.mentor == current_user && \
+        proposal.status == 'accepted' && proposal.incomplete_tasks.empty?
+    end
+    
     #task specific
     def can_add_task?(project)
       can_edit_project?(project)
@@ -99,19 +104,22 @@ module AccessControl
       can_edit_project?(task.project) && task.author == current_user
     end
 
-    
     def can_view_task?(task)
       true
     end
+    
+    def student_for_task?(task)
+      student? && current_user == task.student
+    end
 		
-	#comment specific
-	def can_delete_comment?(comment)
-		comment.user == current_user || admin?
-	end
+	  #comment specific
+	  def can_delete_comment?(comment)
+		  comment.user == current_user || admin?
+	  end
 	
-	def can_edit_comment?(comment)
-		comment.user == current_user
-	end
+	  def can_edit_comment?(comment)
+		  comment.user == current_user
+	  end
 	
     #Make available as ActionView helper methods.
     def self.included(base)
@@ -120,9 +128,10 @@ module AccessControl
         base.send :helper_method, :can_edit_project?, :can_delete_project?
         base.send :helper_method, :can_add_proposal?, :can_edit_proposal?, \
           :can_view_proposal_list?, :can_view_user_proposal_list?
-        base.send :helper_method, :can_accept_proposal?
+        base.send :helper_method, :can_accept_proposal?, :can_signoff_proposal?
         base.send :helper_method, :can_add_task?, :can_edit_task?, \
           :can_view_task_list?, :can_delete_comment?, :can_edit_comment?
+        base.send :helper_method, :student_for_task?
       end
     end  
 end

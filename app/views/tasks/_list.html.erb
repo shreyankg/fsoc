@@ -1,0 +1,77 @@
+<% if can_view_task_list?(project) %>
+  <% if !tasks.empty? %>
+    <h3>Atomic Tasks for 
+      <% if controller_name == "projects" %>
+        <%=h project.name %> 
+      <% else %>
+        this proposal
+      <% end %>
+    </h3>
+    <br />
+    <table id="hor-minimalist-a">
+      <tr>
+        <th>Task</th>
+      <% if project.students.empty? %>
+        <th>Estimated time</th>
+      <% else %>        
+        <th>Student</th>
+        <th>Due date</th>
+        <th>Status</th>        
+      <% end %>
+        <th />
+      </tr>
+
+      <% tasks.each do |task| %>
+        <tr>
+          <td><%= link_to task.title, project_task_path(project, task) %></td>
+        <% if project.students.empty? %>
+          <td><%=h task.eta %> days</td>
+        <% else %>            
+          <td>
+            <% if task.student %>           
+              <%= link_to_user task.student %>
+            <% else %>
+              -
+            <% end %>
+          </td>
+          <td>
+            <% if task.student %>           
+              <%=h task.due_date.to_formatted_s(:long) %>
+            <% else %>
+              -
+            <% end %>            
+          </td>
+          <td>
+            <% if task.student %>           
+              <%=h task.status.humanize %>
+            <% else %>
+              -
+            <% end %>    
+          </td>
+        <% end %>
+          <td>
+            <% if can_edit_task?(task) %>
+              <%= link_to 'Edit', edit_project_task_path(project, task) %> |
+              <% if task.student %>
+                <%= link_to 'Unallocate', unallocate_project_task_path(project, task), :confirm => 'Are you sure?' %>
+              <% else %>
+                <%= link_to 'Delete', project_task_path(project, task), :confirm => 'Are you sure?', :method => :delete %>
+              <% end %>
+              <% if task.status == 'resolved' %>
+                | <%= link_to 'Signoff', signoff_project_task_path(project, task) %>
+              <% end %>
+            <% end %>
+            <% if student_for_task?(task) %>
+              <%= student_action(task) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+     </table>     
+  <% else %>
+    <b> - Empty tasks list - </b>
+  <% end %>
+<% else %>
+  <b>You are not authorised to view the tasks list</b>
+<% end %>
+

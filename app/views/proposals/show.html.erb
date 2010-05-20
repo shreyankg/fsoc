@@ -35,43 +35,8 @@
       <b>Status :</b>
       <%=h @proposal.status.humanize %>
     </p>
-    <% if @proposal.status == 'accepted' %>
-      <% if can_view_task_list?(@proposal.project) %>
-    <% if !@proposal.tasks.empty? %>
-      <h3>Atomic Tasks for this proposal </h3>
-      <br />
-      <table id="hor-minimalist-a">
-        <tr>
-          <th>Task</th>
-          <th>Due date</th>
-          <th />
-        </tr>
-
-        <% @proposal.tasks.each do |task| %>
-          <tr>
-            <td><%= link_to task.title, project_task_path(@proposal.project, task) %></td>
-            <td>
-              <% if task.student %>           
-                <%=h task.due_date.to_formatted_s(:long) %>
-              <% else %>
-                -
-              <% end %>            
-            </td>
-            <td>
-              <% if can_edit_task?(task) %>
-                <%= link_to 'Edit', edit_project_task_path(@proposal.project, task) %> | 
-                <%= link_to 'Delete', project_task_path(@proposal.project, task), :confirm => 'Are you sure?', :method => :delete %>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-       </table>     
-    <% else %>
-      <b> - Empty tasks list - </b>
-    <% end %>
-  <% else %>
-    <b>You are not authorised to view the tasks list</b>
-  <% end %>
+    <% if @proposal.status == 'accepted' || @proposal.status == 'signed_off' %>
+      <%= render :partial => "tasks/list", :locals => { :project => @proposal.project, :tasks => @proposal.tasks }%>
     <% end %>
     
 	<p class="links">
