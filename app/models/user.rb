@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   
   has_many :project_proposals, :class_name => "Project", :foreign_key => 'proposer_id'
   has_many :project_mentorships, :class_name => "Project", :foreign_key => 'mentor_id'
+  has_many :proposal_mentorships, :through => :project_mentorships, :source => 'proposals'  
   has_many :task_authorships, :class_name => "Task", :foreign_key => 'author_id'
   has_many :comments
   has_many :proposals, :foreign_key => 'student_id'

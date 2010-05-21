@@ -67,52 +67,10 @@
 
 <hr />
   <br />
-<% if can_view_proposal_list?(@project) || student? %>
-  <% if !@proposals.empty? %>
-
-    <h3>Listing student proposals</h3>
-      <br >
-      <table id="hor-minimalist-a">
-        <tr>
-          <th>Student</th>
-          <th>Proposal</th>
-          <th>Status</th>
-          <th />
-        </tr>
-
-      <% @proposals.each do |proposal| %>
-        <tr>
-          <td><%= link_to_user proposal.student %>
-          <td><%= link_to truncate(proposal.proposal_text, 45, '...'), project_proposal_path(@project, proposal) %></td>
-          <td><%=h proposal.status.humanize %>
-          <td>
-            <% if can_edit_proposal?(proposal) %>
-              <%= link_to 'Edit', edit_project_proposal_path(@project, proposal) %> | 
-              <%= link_to 'Delete', project_proposal_path(@project, proposal), :confirm => 'Are you sure?', :method => :delete %>
-            <% end %>
-            <% if can_accept_proposal?(proposal) %>
-              <%= link_to verb(proposal), allocate_project_proposal_path(@project, proposal) %>
-              <% if proposal.status == 'pending' %>                
-                | <%= link_to 'Reject', reject_project_proposal_path(@project, proposal) %>
-              <% end %>
-            <% end %>
-            <% if can_signoff_proposal?(proposal) %>
-            	  <%= link_to "Mentor's Sign off", signoff_project_proposal_path(@project, proposal) %>
-          	<% end %>
-          </td>           
-        </tr>
-      <% end %>
-    </table>
+  <% if can_view_proposal_list?(@project) || student? %>
+	  <%= render :partial => "proposals/list", :locals => { :proposals => @proposals }%>	
   <% else %>
-    <% if (current_user.project) %>
-      <h3>You cannot submit proposals for this project </h3>
-    <% else %>
-      <h3>Empty proposals list</h3>
-    <% end %>
+    <h3>You are not authorised to view the proposals list</h3>
   <% end %>
-<% else %>
-  <h3>You are not authorised to view the proposals list</h3>
-<% end %>
-
 	</div>
 </div>

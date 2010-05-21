@@ -1,0 +1,51 @@
+  <% if !proposals.empty? %>
+
+    <h3>Listing student proposals</h3>
+      <br >
+      <table id="hor-minimalist-a">
+        <tr>
+          <% if controller_name == 'projects' %>        
+            <th>Student</th>
+          <% else %>
+            <th>Project</th>          
+          <% end %>
+          <th>Proposal</th>
+          <th>Status</th>
+          <th />
+        </tr>
+
+      <% proposals.each do |proposal| %>
+        <tr>
+          <% if controller_name == 'projects' %>
+            <td><%= link_to_user proposal.student %>
+          <% else %>
+            <td><%= link_to proposal.project.name, proposal.project %></td>
+          <% end %>          
+          <td><%= link_to truncate(proposal.proposal_text, 45, '...'), project_proposal_path(proposal.project, proposal) %></td>
+          <td><%=h proposal.status.humanize %>
+          <td>
+            <% if can_edit_proposal?(proposal) %>
+              <%= link_to 'Edit', edit_project_proposal_path(proposal.project, proposal) %> | 
+              <%= link_to 'Delete', project_proposal_path(proposal.project, proposal), :confirm => 'Are you sure?', :method => :delete %>
+            <% end %>
+            <% if can_accept_proposal?(proposal) %>
+              <%= link_to verb(proposal), allocate_project_proposal_path(proposal.project, proposal) %>
+              <% if proposal.status == 'pending' %>                
+                | <%= link_to 'Reject', reject_project_proposal_path(proposal.project, proposal) %>
+              <% end %>
+            <% end %>
+            <% if can_signoff_proposal?(proposal) %>
+            	  <%= link_to "Mentor's Sign off", signoff_project_proposal_path(proposal.project, proposal) %>
+          	<% end %>
+          </td>           
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <% if (current_user.project) %>
+      <h3>You cannot submit proposals for this project </h3>
+    <% else %>
+      <h3>Empty proposals list</h3>
+    <% end %>
+  <% end %>
+
