@@ -43,7 +43,7 @@ module AccessControl
     
     #project specific
     def can_edit_project?(project)
-      logged_in? && (current_user == project.proposer || \
+      logged_in? && ((current_user == project.proposer && project.status == 'proposed') || \
         current_user == project.mentor || current_user.user_type == 'admin')
     end
     
@@ -101,7 +101,11 @@ module AccessControl
     end
         
     def can_edit_task?(task)
-      can_edit_project?(task.project) && task.author == current_user
+      can_edit_project?(task.project) && (task.author == current_user || task.mentor == current_user) && (task.status == 'open' || task.status == 'new')
+    end
+
+    def can_signoff_task?(task)
+      can_edit_project?(task.project) && task.mentor == current_user && task.status == 'resolved'
     end
 
     def can_view_task?(task)
@@ -131,7 +135,7 @@ module AccessControl
         base.send :helper_method, :can_accept_proposal?, :can_signoff_proposal?
         base.send :helper_method, :can_add_task?, :can_edit_task?, \
           :can_view_task_list?, :can_delete_comment?, :can_edit_comment?
-        base.send :helper_method, :student_for_task?
+        base.send :helper_method, :student_for_task?, :can_signoff_task?
       end
     end  
 end

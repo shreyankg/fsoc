@@ -117,7 +117,7 @@ class TasksController < ApplicationController
 
   def signoff
     @task = Task.find(params[:id])  
-    if can_edit_task?(@task)
+    if can_signoff_task?(@task)
       @task.update_attributes(:status => 'signed_off')
       flash[:notice] = 'Successfully signed-off task!'
     else

@@ -57,10 +57,11 @@
               <% else %>
                 <%= link_to 'Delete', project_task_path(project, task), :confirm => 'Are you sure?', :method => :delete %>
               <% end %>
-              <% if task.status == 'resolved' %>
-                | <%= link_to 'Signoff', signoff_project_task_path(project, task) %>
-              <% end %>
             <% end %>
+              <% if can_signoff_task?(task) %>
+                <%= link_to 'Signoff', signoff_project_task_path(project, task) %>
+              <% end %>
+
             <% if student_for_task?(task) %>
               <%= student_action(task) %>
             <% end %>
