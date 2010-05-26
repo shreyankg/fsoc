@@ -32,7 +32,9 @@
 <p>
   <b>URLs:</b>
   <br />
-    <%= devide_link @project.urls %>
+    <% for url in devide_link(@project.urls) %>
+      <%= url %><br />
+    <% end %>
 </p>
 <p>
  <b>Mentor:</b>

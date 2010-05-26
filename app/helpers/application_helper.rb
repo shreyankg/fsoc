@@ -23,10 +23,10 @@ module ApplicationHelper
   end
   
   def devide_link(links)
-    if links
+    if !(links.nil? || links == '')
       out = []
       links.split(',').each do |link|
-        out << link_to(link, link, :popup=> true) + '<br >'
+        out << link_to(link, link, :popup=> true)
       end
       out
     else
