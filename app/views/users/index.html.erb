@@ -39,7 +39,7 @@
     <% end %>
     </table>
 <% else %>
-      <b>No users around!</b>
+      <h3>No users around!</h3>
       <% if !logged_in? %>
         <p class="links"><%= link_to 'Login', login_path %> or <%= link_to 'Signup', signup_path %> to get started.</p>    
       <% end %>
