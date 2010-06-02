@@ -1,0 +1,41 @@
+-#--
+-#   Copyright (C) 2010 Shreyank Gupta <sgupta@REDHAT.COM>
+-#
+-#   This program is free software: you can redistribute it and/or modify
+-#   it under the terms of the GNU Affero General Public License as published by
+-#   the Free Software Foundation, either version 3 of the License, or
+-#   (at your option) any later version.
+-#
+-#   This program is distributed in the hope that it will be useful,
+-#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+-#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-#   GNU Affero General Public License for more details.
+-#
+-#   You should have received a copy of the GNU Affero General Public License
+-#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-#++
+
+.post
+  %h2.title
+    - if !logged_in?
+      Welcome to FSoC
+    - else
+      =h current_user.user_type.capitalize
+      Dashboard
+  %p.meta
+    %span.date &nbsp;
+  %div{:style => 'clear: both'} &nbsp;
+  .entry
+    - if !logged_in?
+      %h3 Hi and welcome to FSoC
+      %p.links
+        = link_to 'Login', login_path
+        or 
+        = link_to 'Signup', signup_path
+        to get started.
+    - else
+      - if admin?
+        %br/
+        %p /* under construction */
+      = render :partial => "dashboard/dashboard", :locals => { :user => current_user }
+
